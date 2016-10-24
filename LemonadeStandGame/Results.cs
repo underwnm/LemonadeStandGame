@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LemonadeStandGame
 {
-    class Sunny
+    class Results
     {
     }
 }

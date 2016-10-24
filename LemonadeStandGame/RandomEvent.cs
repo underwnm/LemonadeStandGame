@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LemonadeStandGame
 {
-    class HotAndDry
+    public abstract class RandomEvent
     {
+
     }
 }
