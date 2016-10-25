@@ -17,24 +17,24 @@ namespace LemonadeStandGame
         public void ExecuteInventory()
         {
             DisplayCurrentInventory();
-            CheckInventory();
+            CheckRecipeVsInventory();
         }
         private void DisplayCurrentInventory()
         {
             Console.WriteLine("");
             Console.WriteLine("Let's check your supply...");
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("You have {0} cups of sugar", player.sugar);
-            Console.WriteLine("You have {0} lemons", player.lemons);
-            Console.WriteLine("You have {0} cups of ice", player.ice);
+            Console.WriteLine("You have {0} cups of sugar", player.ingredients[0]);
+            Console.WriteLine("You have {0} lemons", player.ingredients[1]);
+            Console.WriteLine("You have {0} cups of ice", player.ingredients[2]);
             Console.WriteLine("You have ${0} available in cash", player.money);
             Console.WriteLine("------------------------------------");
         }
         
-        private void CheckInventory()
+        private void CheckRecipeVsInventory()
         {
             int product;
-            if (player.sugar == 0 || player.lemons == 0 || player.ice == 0)
+            if (player.ingredients[0] < player.recipe[0] || player.ingredients[1] < player.recipe[1] || player.ingredients[2] < player.recipe[2])
             {
                 product = 0;
                 Console.WriteLine("");
@@ -42,7 +42,12 @@ namespace LemonadeStandGame
             }
             else
             {
-                
+                int maxSugar = player.ingredients[0] / player.recipe[0];
+                int maxLemons = player.ingredients[1] / player.recipe[1];
+                int maxIce = player.ingredients[2] / player.recipe[2];
+                product = new int[] { maxSugar, maxLemons, maxIce }.Min();
+                Console.WriteLine("");
+                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade**", product);
             }
         }
     }

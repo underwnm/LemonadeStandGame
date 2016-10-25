@@ -10,9 +10,13 @@ namespace LemonadeStandGame
     {
         public string name;
         public double money = 20.00;
-        public int sugar;
-        public int lemons;
-        public int ice;
-
+        public int[] ingredients = new int[3]; //Sugar, Lemons, Ice
+        public int[] recipe = new int[3]; //#Sugar, #Lemons, #Ice
+        public void GetPlayerName()
+        {
+            Console.WriteLine("Enter the owner of the lemonade stand");
+            name = Console.ReadLine().ToUpper();
+            Console.Clear();
+        }
     }
 }

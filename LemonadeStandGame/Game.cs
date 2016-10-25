@@ -11,8 +11,21 @@ namespace LemonadeStandGame
         UserInterface output = new UserInterface();
         Player player = new Player();
         Day day;
+        int currentDay = 0;
 
         public void ExecuteStartOfGame()
+        {
+            ExecuteGameWelcome();
+            player.GetPlayerName();
+
+            while (currentDay < 8)
+            {
+                day = new Day(player);
+                day.ExecuteDay();
+                currentDay++;
+            }
+        }
+        private void ExecuteGameWelcome()
         {
             output.DisplayMenuMessage();
             output.AddSpace();
@@ -27,13 +40,8 @@ namespace LemonadeStandGame
             output.DisplayContinueOrExit();
             GetUserInput();
             output.ClearScreen();
-            day = new Day(player);
-            day.ExecuteDay();
-            
-
-
         }
-        public string GetUserInput()
+        private string GetUserInput()
         {
             string userInput = Console.ReadLine();
             return userInput;

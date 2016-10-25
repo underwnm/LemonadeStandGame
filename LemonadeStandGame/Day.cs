@@ -9,7 +9,8 @@ namespace LemonadeStandGame
     class Day
     {
         Player player;
-        double[] cost = new double[3];
+        Weather weather = new Weather();
+        double[] cost = new double[3]; //Sugar, Lemons, Ice
 
         public Day(Player player)
         {
@@ -17,6 +18,8 @@ namespace LemonadeStandGame
         }
         public void ExecuteDay()
         {
+            weather.GetWeatherForecast();
+            CreateRecipe();
             GetItemPrices();
             GoToStore();
         }
@@ -27,15 +30,15 @@ namespace LemonadeStandGame
             cost[1] = Math.Round(RandomNumberBetween(2.20, 2.40), 2);
             cost[2] = Math.Round(RandomNumberBetween(1.30, 1.50), 2);
         }
-        public void CreateRecipe()
-        {
-            Recipe recipe = new Recipe();
-            recipe.ExecuteMakeRecipe();
-        }
         public void GoToStore()
         {
             Store store = new Store(player, cost);
             store.ExecuteStore();
+        }
+        public void CreateRecipe()
+        {
+            Recipe recipe = new Recipe(player);
+            recipe.GetRecipe();
         }
         private double RandomNumberBetween(double minValue, double maxvalue)
         {

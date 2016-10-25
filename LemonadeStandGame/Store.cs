@@ -71,9 +71,9 @@ namespace LemonadeStandGame
                         if (player.money >= buySugar * cost[0])
                         {
                             player.money = Math.Round((player.money - (buySugar * cost[0])), 2);
-                            player.sugar = buySugar*15 + player.sugar;
+                            player.ingredients[0] = buySugar*15 + player.ingredients[0];
                             Console.WriteLine("");
-                            Console.WriteLine("You just purchased {0}, 4 lb bags of sugar, and now have {1} cups of sugar in your supply", buySugar, player.sugar);
+                            Console.WriteLine("You just purchased {0}, 4 lb bags of sugar, and now have {1} cups of sugar in your supply", buySugar, player.ingredients[0]);
                             Console.WriteLine("You have ${0} cash left", player.money);
                             Console.WriteLine("");
                             Console.WriteLine("Would you like to buy anything else? Yes or No?");
@@ -106,9 +106,9 @@ namespace LemonadeStandGame
                         if (player.money >= buyLemons * cost[1])
                         {
                             player.money = Math.Round((player.money - (buyLemons * cost[1])), 2);
-                            player.lemons = buyLemons*5 + player.lemons;
+                            player.ingredients[1] = buyLemons*5 + player.ingredients[1];
                             Console.WriteLine("");
-                            Console.WriteLine("You just purchased {0}, 1 lb bags of lemons, and have {1} lemons in your supply", buyLemons, player.lemons);
+                            Console.WriteLine("You just purchased {0}, 1 lb bags of lemons, and have {1} lemons in your supply", buyLemons, player.ingredients[1]);
                             Console.WriteLine("You have ${0} cash left", player.money);
                             Console.WriteLine("");
                             Console.WriteLine("Would you like to buy anything else? Yes or No?");
@@ -140,9 +140,9 @@ namespace LemonadeStandGame
                         if (player.money >= buyIce * cost[2])
                         {
                             player.money = Math.Round((player.money - (buyIce * cost[2])), 2);
-                            player.ice = buyIce*15 + player.ice;
+                            player.ingredients[2] = buyIce*15 + player.ingredients[2];
                             Console.WriteLine("");
-                            Console.WriteLine("You just purchased {0}, 4 lb bags of ice, and have {1} cups of ice in your supply", buyIce, player.ice);
+                            Console.WriteLine("You just purchased {0}, 4 lb bags of ice, and have {1} cups of ice in your supply", buyIce, player.ingredients[2]);
                             Console.WriteLine("You have ${0} cash left", player.money);
                             Console.WriteLine("");
                             Console.WriteLine("Would you like to buy anything else? Yes or No?");
@@ -170,7 +170,7 @@ namespace LemonadeStandGame
                     Console.WriteLine("INVALID INPUT TRY AGAIN");
                     Console.ReadKey();
                     Console.Clear();
-                    BuyItems();
+                    ExecuteStore();
                     break;
             }
         }
