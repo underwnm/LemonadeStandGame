@@ -30,7 +30,7 @@ namespace LemonadeStandGame
         {
             Random random = new Random();
             cost[0] = Math.Round(RandomNumberBetween(1.90, 2.10), 2);
-            cost[1] = Math.Round(RandomNumberBetween(2.20, 2.40), 2);
+            cost[1] = Math.Round(RandomNumberBetween(.5, .6), 2);
             cost[2] = Math.Round(RandomNumberBetween(1.30, 1.50), 2);
         }
         public void GoToStore()

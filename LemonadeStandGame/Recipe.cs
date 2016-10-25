@@ -15,13 +15,14 @@ namespace LemonadeStandGame
         }
         public void GetRecipe()
         {
-            Console.WriteLine("Create your recipe for tomorrow");
+            Console.WriteLine("Create a recipe for tomorrow");
+            Console.WriteLine("Each recipe creates a 1 gallon pitcher\n This will create 8 pints to sell to potential customers");
             Console.WriteLine("");
-            Console.WriteLine("Enter how many cups of sugar...");
+            Console.WriteLine("Enter how many tablespoons of sugar...");
             player.recipe[0] = GetUserInput();
             Console.WriteLine("Enter how many lemons...");
             player.recipe[1] = GetUserInput();
-            Console.WriteLine("Enter how many cups of ice");
+            Console.WriteLine("Enter how many cups of ice...");
             player.recipe[2] = GetUserInput();
         }
         private int GetUserInput()

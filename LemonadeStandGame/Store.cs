@@ -21,10 +21,8 @@ namespace LemonadeStandGame
         {
             DisplayItemPrices();
             Thread.Sleep(500);
-            DisplayInventory();
-            Thread.Sleep(500);
             DisplayRecipe();
-            Thread.Sleep(500);
+            DisplayInventory();
             BuyItems();
         }
         private void DisplayItemPrices()
@@ -34,8 +32,8 @@ namespace LemonadeStandGame
             Console.WriteLine("These are today's prices");
             Console.WriteLine("------------------------------------");
             Console.WriteLine("4 lb bag of sugar costs {0}", cost[0]);
-            Console.WriteLine("1 lb bag of lemons costs {0}", cost[1]);
-            Console.WriteLine("4 lb bag of ice costs {0}", cost[2]);
+            Console.WriteLine("1 lemon costs {0}", cost[1]);
+            Console.WriteLine("5 lb bag of ice costs {0}", cost[2]);
             Console.WriteLine("------------------------------------");
         }
         private void DisplayInventory()
@@ -48,7 +46,7 @@ namespace LemonadeStandGame
             Console.WriteLine("");
             Console.WriteLine("Let's check your recipe...");
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("{0} cups of sugar", player.recipe[0]);
+            Console.WriteLine("{0} tablespoon of sugar", player.recipe[0]);
             Console.WriteLine("{0} lemons", player.recipe[1]);
             Console.WriteLine("{0} cups of ice", player.recipe[2]);
             Console.WriteLine("------------------------------------");
@@ -68,9 +66,9 @@ namespace LemonadeStandGame
                         if (player.money >= buySugar * cost[0])
                         {
                             player.money = Math.Round((player.money - (buySugar * cost[0])), 2);
-                            player.ingredients[0] = buySugar*15 + player.ingredients[0];
+                            player.ingredients[0] = buySugar*240 + player.ingredients[0];
                             Console.WriteLine("");
-                            Console.WriteLine("You just purchased {0}, 4 lb bags of sugar, and now have {1} cups of sugar in your supply", buySugar, player.ingredients[0]);
+                            Console.WriteLine("You just purchased {0}, 4 lb bags of sugar, and now have {1} tablespoons of sugar in your supply", buySugar, player.ingredients[0]);
                             Console.WriteLine("You have ${0} cash left", player.money);
                             Console.WriteLine("");
                             Console.WriteLine("Would you like to buy anything else? Yes or No?");
@@ -98,14 +96,14 @@ namespace LemonadeStandGame
                     while (exit)
                     {
                         Console.WriteLine("");
-                        Console.WriteLine("How many bags of lemons do you want?");
+                        Console.WriteLine("How many lemons do you want?");
                         int buyLemons = Convert.ToInt16(GetUserInput());
                         if (player.money >= buyLemons * cost[1])
                         {
                             player.money = Math.Round((player.money - (buyLemons * cost[1])), 2);
-                            player.ingredients[1] = buyLemons*15 + player.ingredients[1];
+                            player.ingredients[1] = buyLemons + player.ingredients[1];
                             Console.WriteLine("");
-                            Console.WriteLine("You just purchased {0}, 1 lb bags of lemons, and have {1} lemons in your supply", buyLemons, player.ingredients[1]);
+                            Console.WriteLine("You just purchased {0} lemons and have {1} lemons in your supply", buyLemons, player.ingredients[1]);
                             Console.WriteLine("You have ${0} cash left", player.money);
                             Console.WriteLine("");
                             Console.WriteLine("Would you like to buy anything else? Yes or No?");
@@ -117,6 +115,7 @@ namespace LemonadeStandGame
                             }
                             else
                             {
+                                Console.Clear();
                                 exit = false;
                             }
                         }
@@ -137,9 +136,9 @@ namespace LemonadeStandGame
                         if (player.money >= buyIce * cost[2])
                         {
                             player.money = Math.Round((player.money - (buyIce * cost[2])), 2);
-                            player.ingredients[2] = buyIce*15 + player.ingredients[2];
+                            player.ingredients[2] = buyIce*10 + player.ingredients[2];
                             Console.WriteLine("");
-                            Console.WriteLine("You just purchased {0}, 4 lb bags of ice, and have {1} cups of ice in your supply", buyIce, player.ingredients[2]);
+                            Console.WriteLine("You just purchased {0}, 5 lb bags of ice, and have {1} cups of ice in your supply", buyIce, player.ingredients[2]);
                             Console.WriteLine("You have ${0} cash left", player.money);
                             Console.WriteLine("");
                             Console.WriteLine("Would you like to buy anything else? Yes or No?");
@@ -151,6 +150,7 @@ namespace LemonadeStandGame
                             }
                             else
                             {
+                                Console.Clear();
                                 exit = false;
                             }
                         }
@@ -179,9 +179,9 @@ namespace LemonadeStandGame
         {
             Console.WriteLine("");
             Console.WriteLine("Select which product you want to purchase...");
-            Console.WriteLine("1. 4 lb bag of sugar (15 cups per bag)");
-            Console.WriteLine("2. 2 lb bag of lemons (15 lemons per bag)");
-            Console.WriteLine("3. 4 lb bag of ice (15 cups per bag)");
+            Console.WriteLine("1. 4 lb bag of sugar (240 tablespoons per bag)");
+            Console.WriteLine("2. Lemons");
+            Console.WriteLine("3. 5 lb bag of ice (10 cups per bag)");
             Console.WriteLine("4. Buy Nothing");
         }
         private string GetUserInput()

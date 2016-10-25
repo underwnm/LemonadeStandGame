@@ -24,7 +24,7 @@ namespace LemonadeStandGame
             Console.WriteLine("");
             Console.WriteLine("Let's check your supply...");
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("You have {0} cups of sugar", player.ingredients[0]);
+            Console.WriteLine("You have {0} tablespoons of sugar", player.ingredients[0]);
             Console.WriteLine("You have {0} lemons", player.ingredients[1]);
             Console.WriteLine("You have {0} cups of ice", player.ingredients[2]);
             Console.WriteLine("You have ${0} available in cash", player.money);
@@ -47,7 +47,7 @@ namespace LemonadeStandGame
                 int maxIce = player.ingredients[2] / player.recipe[2];
                 product = new int[] { maxSugar, maxLemons, maxIce }.Min();
                 Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade**", product);
+                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade and {1} pints to sell**", product, product*8);
             }
         }
     }
