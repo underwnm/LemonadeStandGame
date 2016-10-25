@@ -8,5 +8,11 @@ namespace LemonadeStandGame
 {
     class Recipe
     {
+
+
+        public void ExecuteMakeRecipe()
+        {
+
+        }
     }
 }

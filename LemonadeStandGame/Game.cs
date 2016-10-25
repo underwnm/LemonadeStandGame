@@ -9,6 +9,8 @@ namespace LemonadeStandGame
     class Game
     {
         UserInterface output = new UserInterface();
+        Player player = new Player();
+        Day day;
 
         public void ExecuteStartOfGame()
         {
@@ -25,6 +27,11 @@ namespace LemonadeStandGame
             output.DisplayContinueOrExit();
             GetUserInput();
             output.ClearScreen();
+            day = new Day(player);
+            day.ExecuteDay();
+            
+
+
         }
         public string GetUserInput()
         {

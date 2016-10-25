@@ -8,40 +8,184 @@ namespace LemonadeStandGame
 {
     class Store
     {
-        private double sugarCost;
-        private double lemonCost;
-        private double iceCost;
-        private double money;
-        public void DisplayStoreItems(int sugar, int lemons, int ice, double money)
+        private Player player;
+        bool exit = true;
+        double[] cost;
+        public Store (Player player, double[] cost)
         {
-            Console.WriteLine("WELCOME TO THE STORE");
-            Console.WriteLine("Let's buy some supplies...");
-            Console.WriteLine("Right now, you have:");
-            Console.WriteLine("------------------------------------");
-            Console.WriteLine("You have {0} cups of sugar", sugar);
-            Console.WriteLine("You have {0} lemons", lemons);
-            Console.WriteLine("You have {0} cups of ice", ice);
-            Console.WriteLine("You have ${0} available in cash", money);
-            Console.WriteLine("------------------------------------");
+            this.player = player;
+            this.cost = cost;        
+        }
+        public void ExecuteStore()
+        {
+            DisplayItemPrices();
+            DisplayInventory();
+            AskPlayerToBuy();
+            CheckPlayerBuyChoice();
+        }
+        private void DisplayItemPrices()
+        {
+            Console.WriteLine("WELCOME TO {0}'S FAVORITE STORE", player.name);
             Console.WriteLine("");
-            Console.WriteLine("The prices today at the store are...");
-            Console.WriteLine("4 lb bag of sugar costs {0}", sugarCost);
-            Console.WriteLine("1 lb bag of lemons costs {0}", lemonCost);
-            Console.WriteLine("5 lb bag of ice costs {0}", iceCost);
+            Console.WriteLine("These are today's prices");
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("4 lb bag of sugar costs {0}", cost[0]);
+            Console.WriteLine("1 lb bag of lemons costs {0}", cost[1]);
+            Console.WriteLine("4 lb bag of ice costs {0}", cost[2]);
+            Console.WriteLine("------------------------------------");
         }
-        public void GetItemPrices()
+        private void DisplayInventory()
         {
-            Random random = new Random();
-            sugarCost = Math.Round(RandomNumberBetween(1.90, 2.10), 2);
-            lemonCost = Math.Round(RandomNumberBetween(2.20, 2.40), 2);
-            iceCost = Math.Round(RandomNumberBetween(1.30, 1.50), 2);
-            DisplayStoreItems(5, 3, 3, 10.00);
+            Inventory inventory = new Inventory(player);
+            inventory.ExecuteInventory();
         }
-        public double RandomNumberBetween(double minValue, double maxvalue)
+        private void AskPlayerToBuy()
         {
-            Random random = new Random();
-            double next = random.NextDouble();
-            return minValue + (next * (maxvalue-minValue));
+            Console.WriteLine("");
+            Console.WriteLine("Would you like to purchase supplies today? Yes or No");
+        }
+        private void CheckPlayerBuyChoice()
+        {
+            string buy = GetUserInput();
+            if (buy == "YES")
+            {
+                BuyItems();
+            }
+            else
+            {
+                Console.Clear();
+            }
+        }
+        private void BuyItems()
+        {
+            DisplayBuyChoices();
+            int buy = Convert.ToInt16(GetUserInput());
+            switch (buy)
+            {
+                case 1:
+                    while (exit)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("How many bags of sugar do you want?");
+                        int buySugar = Convert.ToInt16(GetUserInput());
+                        if (player.money >= buySugar * cost[0])
+                        {
+                            player.money = Math.Round((player.money - (buySugar * cost[0])), 2);
+                            player.sugar = buySugar*15 + player.sugar;
+                            Console.WriteLine("");
+                            Console.WriteLine("You just purchased {0}, 4 lb bags of sugar, and now have {1} cups of sugar in your supply", buySugar, player.sugar);
+                            Console.WriteLine("You have ${0} cash left", player.money);
+                            Console.WriteLine("");
+                            Console.WriteLine("Would you like to buy anything else? Yes or No?");
+                            string buyMore = GetUserInput();
+                            if (buyMore == "YES")
+                            {
+                                Console.Clear();
+                                ExecuteStore();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                exit = false;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Not enough money...Press key to continue...");
+                            Console.ReadLine();
+                        }
+                    }
+                    break;
+                case 2:
+                    while (exit)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("How many bags of lemons do you want?");
+                        int buyLemons = Convert.ToInt16(GetUserInput());
+                        if (player.money >= buyLemons * cost[1])
+                        {
+                            player.money = Math.Round((player.money - (buyLemons * cost[1])), 2);
+                            player.lemons = buyLemons*5 + player.lemons;
+                            Console.WriteLine("");
+                            Console.WriteLine("You just purchased {0}, 1 lb bags of lemons, and have {1} lemons in your supply", buyLemons, player.lemons);
+                            Console.WriteLine("You have ${0} cash left", player.money);
+                            Console.WriteLine("");
+                            Console.WriteLine("Would you like to buy anything else? Yes or No?");
+                            string buyMore = GetUserInput();
+                            if (buyMore == "YES")
+                            {
+                                Console.Clear();
+                                ExecuteStore();
+                            }
+                            else
+                            {
+                                exit = false;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Not enough money");
+                            Console.ReadLine();
+                        }
+                    }
+                    break;
+                case 3:
+                    while (exit)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("How many bags of ice do you want?");
+                        int buyIce = Convert.ToInt16(GetUserInput());
+                        if (player.money >= buyIce * cost[2])
+                        {
+                            player.money = Math.Round((player.money - (buyIce * cost[2])), 2);
+                            player.ice = buyIce*15 + player.ice;
+                            Console.WriteLine("");
+                            Console.WriteLine("You just purchased {0}, 4 lb bags of ice, and have {1} cups of ice in your supply", buyIce, player.ice);
+                            Console.WriteLine("You have ${0} cash left", player.money);
+                            Console.WriteLine("");
+                            Console.WriteLine("Would you like to buy anything else? Yes or No?");
+                            string buyMore = GetUserInput();
+                            if (buyMore == "YES")
+                            {
+                                Console.Clear();
+                                ExecuteStore();
+                            }
+                            else
+                            {
+                                exit = false;
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("Not enough money");
+                            Console.ReadLine();
+                        }
+                    }
+                    break;
+                default:
+                    Console.WriteLine("");
+                    Console.WriteLine("INVALID INPUT TRY AGAIN");
+                    Console.ReadKey();
+                    Console.Clear();
+                    BuyItems();
+                    break;
+            }
+        }
+        private void DisplayBuyChoices()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Select which product you want to purchase...");
+            Console.WriteLine("1. 4 lb bag of sugar (15 cups per bag)");
+            Console.WriteLine("2. 1 lb bag of lemons (5 lemons per bag)");
+            Console.WriteLine("3. 4 lb bag of ice (15 cups per bag)");
+        }
+        private string GetUserInput()
+        {
+            string userInput = Console.ReadLine().ToUpper();
+            return userInput;
         }
     }
 }

@@ -53,6 +53,7 @@
     <Compile Include="RandomEvent.cs" />
     <Compile Include="Recipe.cs" />
     <Compile Include="Results.cs" />
+    <Compile Include="Sell.cs" />
     <Compile Include="Store.cs" />
     <Compile Include="UserInterface.cs" />
     <Compile Include="Weather.cs" />

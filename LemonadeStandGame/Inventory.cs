@@ -8,48 +8,42 @@ namespace LemonadeStandGame
 {
     class Inventory
     {
-        private int sugar;
-        private int lemons;
-        private int ice;
-        private double money;
+        Player player;
 
-        public Inventory(int sugar, int lemons, int ice, double money)
+        public Inventory(Player player)
         {
-            this.sugar = sugar;
-            this.lemons = lemons;
-            this.ice = ice;
-            this.money = money;
+            this.player = player;
         }
-        public void DisplayCurrentInventory()
+        public void ExecuteInventory()
         {
+            DisplayCurrentInventory();
+            CheckInventory();
+        }
+        private void DisplayCurrentInventory()
+        {
+            Console.WriteLine("");
             Console.WriteLine("Let's check your supply...");
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("You have {0} cups of sugar", sugar);
-            Console.WriteLine("You have {0} lemons", lemons);
-            Console.WriteLine("You have {0} cups of ice", ice);
-            Console.WriteLine("You have ${0} available in cash", money);
+            Console.WriteLine("You have {0} cups of sugar", player.sugar);
+            Console.WriteLine("You have {0} lemons", player.lemons);
+            Console.WriteLine("You have {0} cups of ice", player.ice);
+            Console.WriteLine("You have ${0} available in cash", player.money);
             Console.WriteLine("------------------------------------");
         }
         
-        public void CheckInventory()
+        private void CheckInventory()
         {
             int product;
-            if (sugar == 0 || lemons == 0 || ice == 0)
+            if (player.sugar == 0 || player.lemons == 0 || player.ice == 0)
             {
                 product = 0;
-                Console.WriteLine("With your inventory you can make {0} pitchers of lemonade", product);                
+                Console.WriteLine("");
+                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade**", product);                
             }
-        }
-        public void CheckBuy()
-        {
-            Console.WriteLine("Would you like to purchase supplies?");
-            string buy = Console.ReadLine().ToUpper();
-            Console.WriteLine("");
-            if (buy == "YES")
+            else
             {
-                Store store = new Store();
+                
             }
-
         }
     }
 }

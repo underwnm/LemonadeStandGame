@@ -8,7 +8,11 @@ namespace LemonadeStandGame
 {
     class Player
     {
-        //private int startingMoney = 2000;
+        public string name;
+        public double money = 20.00;
+        public int sugar;
+        public int lemons;
+        public int ice;
 
     }
 }
