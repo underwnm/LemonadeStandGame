@@ -18,10 +18,13 @@ namespace LemonadeStandGame
         }
         public void ExecuteDay()
         {
-            weather.GetWeatherForecast();
+            weather.GetTomorrowForecast();
             CreateRecipe();
             GetItemPrices();
             GoToStore();
+            weather.GetActualWeather();
+            Console.WriteLine("START NEXT DAY");
+            ProceedWithGame();
         }
         private void GetItemPrices()
         {
@@ -32,8 +35,17 @@ namespace LemonadeStandGame
         }
         public void GoToStore()
         {
+            DisplayToStore();
+            ProceedWithGame();
             Store store = new Store(player, cost);
             store.ExecuteStore();
+        }
+        public void DisplayToStore()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("    LETS GO TO THE STORE FOR YOUR RECIPE INGREDIENTS");
+            Console.WriteLine("----------------------------------------------------------");
         }
         public void CreateRecipe()
         {
@@ -45,6 +57,13 @@ namespace LemonadeStandGame
             Random random = new Random();
             double next = random.NextDouble();
             return minValue + (next * (maxvalue - minValue));
+        }
+        private void ProceedWithGame()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("PRESS ANY KEY TO CONTINUE");
+            Console.ReadKey();
+            Console.Clear();
         }
     }
 }

@@ -8,5 +8,11 @@ namespace LemonadeStandGame
 {
     class Customer
     {
+        public Customer()
+        {
+
+        }
+        //public double customerDemand;
+        //public int customerType;
     }
 }

@@ -8,78 +8,121 @@ namespace LemonadeStandGame
 {
     class Weather
     {
-        int[] weatherType = new int[5]; // "Showers", "Partly Cloudy", "Cloudy", "Mostly Sunny", "Sunny"
+        //int[] weatherType = new int[5]; // "Showers", "Partly Cloudy", "Cloudy", "Mostly Sunny", "Sunny"
+        double[] weatherDemand = new double[5];
+        int weatherType;
+        string weather;
+        int forecastTemperature;
+        int actualTemperature;
 
-        public void GetWeatherForecast()
+        public void GetTomorrowForecast()
         {
-            int weatherType = GetRandomNumber();
-            string temperatue = GetTemperature(weatherType);
+            weatherType = GetRandomNumber();
+            GetTemperature(weatherType);
             switch (weatherType)
             {
                 case 0:
-                    DisplayForecast("Showers", temperatue);
+                    weather = "Showers";
+                    DisplayTomorrowForecast(weather, forecastTemperature);
                     break;
                 case 1:
-                    DisplayForecast("Cloudy", temperatue);
+                    weather = "Cloudy";
+                    DisplayTomorrowForecast(weather, forecastTemperature);
                     break;
                 case 2:
-                    DisplayForecast("Partly Cloudy", temperatue);
+                    weather = "Partly Cloudy";
+                    DisplayTomorrowForecast(weather, forecastTemperature);
                     break;
                 case 3:
-                    DisplayForecast("Mostly Sunny", temperatue);
+                    weather = "Mostly Sunny";
+                    DisplayTomorrowForecast(weather, forecastTemperature);
                     break;
                 case 4:
-                    DisplayForecast("Sunny", temperatue);
+                    weather = "Sunny";
+                    DisplayTomorrowForecast(weather, forecastTemperature);
                     break;
             }
         }
-        private void DisplayForecast(string weatherType, string temperature)
+        private void DisplayTomorrowForecast(string weatherType, int temperature)
         {
-            Console.WriteLine("Tomororw's forecast calls for {0} and a High of {1}°", weatherType, temperature);
-        }
-        private string GetTemperature(int type)
-        {
-            int temperature = 1;
-            switch (type)
-            {
-                case 0:
-                    temperature = RandomNumberBetween(60, 90);
-                    break;
-                case 1:
-                    temperature = RandomNumberBetween(60, 69);
-                    break;
-                case 2:
-                    temperature = RandomNumberBetween(70, 79);
-                    break;
-                case 3:
-                    temperature = RandomNumberBetween(80, 85);
-                    break;
-                case 4:
-                    temperature = RandomNumberBetween(86, 91);
-                    break;
-            }
-            return temperature.ToString();
+            Console.WriteLine("");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine(" Tomororw's forecast calls for {0} and a High of {1}°", weatherType, temperature);
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("");
         }
         public void GetActualWeather()
         {
-
+            switch (weatherType)
+            {
+                case 0:
+                    weatherDemand[0] = .0;
+                    DisplayActualWeather(weather, actualTemperature);
+                    break;
+                case 1:
+                    weatherDemand[1] = .25;
+                    DisplayActualWeather(weather, actualTemperature);
+                    break;
+                case 2:
+                    weatherDemand[2] = .5;
+                    DisplayActualWeather(weather, actualTemperature);
+                    break;
+                case 3:
+                    weatherDemand[3] = .75;
+                    DisplayActualWeather(weather, actualTemperature);
+                    break;
+                case 4:
+                    weatherDemand[4] = 1;
+                    DisplayActualWeather(weather, actualTemperature);
+                    break;
+            }
         }
-        public void CalculateChanceOfRain()
+        private void DisplayActualWeather(string actualWeather, int actualTemperature)
         {
-
+            Console.WriteLine("");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("     Today is {0} and a High of {1}°", actualWeather, actualTemperature);
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("");
+        }
+        private void GetTemperature(int weatherType)
+        {
+            switch (weatherType)
+            {
+                case 0:
+                    forecastTemperature = RandomNumberBetween(70, 90);
+                    actualTemperature = RandomNumberBetween(forecastTemperature - 3, forecastTemperature + 3);
+                    break;
+                case 1:
+                    forecastTemperature = RandomNumberBetween(70, 75);
+                    actualTemperature = RandomNumberBetween(forecastTemperature - 3, forecastTemperature + 3);
+                    break;
+                case 2:
+                    forecastTemperature = RandomNumberBetween(75, 80);
+                    actualTemperature = RandomNumberBetween(forecastTemperature - 3, forecastTemperature + 3);
+                    break;
+                case 3:
+                    forecastTemperature = RandomNumberBetween(80, 85);
+                    actualTemperature = RandomNumberBetween(forecastTemperature - 3, forecastTemperature + 3);
+                    break;
+                case 4:
+                    forecastTemperature = RandomNumberBetween(85, 90);
+                    actualTemperature = RandomNumberBetween(forecastTemperature - 3, forecastTemperature + 3);
+                    break;
+            }
         }
         private int GetRandomNumber()
         {
             Random random = new Random();
-            int next = random.Next(0, 5);
-            return next;
+            int number = random.Next(0, 5);
+            return number;
         }
         private int RandomNumberBetween(int minValue, int maxvalue)
         {
             Random random = new Random();
             double multiplier = random.NextDouble();
-            int results = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
-            return results;
+            int temperatue = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
+            return temperatue;
         }
     }
 }

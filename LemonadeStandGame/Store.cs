@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LemonadeStandGame
@@ -19,9 +20,12 @@ namespace LemonadeStandGame
         public void ExecuteStore()
         {
             DisplayItemPrices();
+            Thread.Sleep(500);
             DisplayInventory();
-            AskPlayerToBuy();
-            CheckPlayerBuyChoice();
+            Thread.Sleep(500);
+            DisplayRecipe();
+            Thread.Sleep(500);
+            BuyItems();
         }
         private void DisplayItemPrices()
         {
@@ -39,22 +43,15 @@ namespace LemonadeStandGame
             Inventory inventory = new Inventory(player);
             inventory.ExecuteInventory();
         }
-        private void AskPlayerToBuy()
+        private void DisplayRecipe()
         {
             Console.WriteLine("");
-            Console.WriteLine("Would you like to purchase supplies today? Yes or No");
-        }
-        private void CheckPlayerBuyChoice()
-        {
-            string buy = GetUserInput();
-            if (buy == "YES")
-            {
-                BuyItems();
-            }
-            else
-            {
-                Console.Clear();
-            }
+            Console.WriteLine("Let's check your recipe...");
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("{0} cups of sugar", player.recipe[0]);
+            Console.WriteLine("{0} lemons", player.recipe[1]);
+            Console.WriteLine("{0} cups of ice", player.recipe[2]);
+            Console.WriteLine("------------------------------------");
         }
         private void BuyItems()
         {
@@ -106,7 +103,7 @@ namespace LemonadeStandGame
                         if (player.money >= buyLemons * cost[1])
                         {
                             player.money = Math.Round((player.money - (buyLemons * cost[1])), 2);
-                            player.ingredients[1] = buyLemons*5 + player.ingredients[1];
+                            player.ingredients[1] = buyLemons*15 + player.ingredients[1];
                             Console.WriteLine("");
                             Console.WriteLine("You just purchased {0}, 1 lb bags of lemons, and have {1} lemons in your supply", buyLemons, player.ingredients[1]);
                             Console.WriteLine("You have ${0} cash left", player.money);
@@ -165,6 +162,10 @@ namespace LemonadeStandGame
                         }
                     }
                     break;
+                case 4:
+                    exit = false;
+                    Console.Clear();
+                    break;
                 default:
                     Console.WriteLine("");
                     Console.WriteLine("INVALID INPUT TRY AGAIN");
@@ -179,8 +180,9 @@ namespace LemonadeStandGame
             Console.WriteLine("");
             Console.WriteLine("Select which product you want to purchase...");
             Console.WriteLine("1. 4 lb bag of sugar (15 cups per bag)");
-            Console.WriteLine("2. 1 lb bag of lemons (5 lemons per bag)");
+            Console.WriteLine("2. 2 lb bag of lemons (15 lemons per bag)");
             Console.WriteLine("3. 4 lb bag of ice (15 cups per bag)");
+            Console.WriteLine("4. Buy Nothing");
         }
         private string GetUserInput()
         {
