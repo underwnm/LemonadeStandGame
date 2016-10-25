@@ -9,7 +9,7 @@ namespace LemonadeStandGame
     class Weather
     {
         private string name;
-        public Weather Sunny = new Weather("Sunny");
+        List<string> type = new List<string>() { "Rainy", "Cold", "Cloudy", "Sunny", "Hot"};
 
         private Weather(string name)
         {
@@ -20,6 +20,10 @@ namespace LemonadeStandGame
 
         }
         public void GetActualWeather()
+        {
+
+        }
+        public void CalculateChanceOfRain()
         {
 
         }

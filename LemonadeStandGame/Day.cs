@@ -8,16 +8,16 @@ namespace LemonadeStandGame
 {
     class Day
     {
-        public int number;
+        public int dayNumber;
         public Weather weather;
         public RandomEvent randomEvent;
-        public int lemonadeCost;
+        //public int lemonadeCost;
 
-        public Day(int number, Weather weather, RandomEvent randomEvent)
+        public void CheckSupply()
         {
-            this.number = number;
-            this.weather = weather;
-            this.randomEvent = randomEvent;
+            Console.WriteLine("Let's check you supply...");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("");
         }
     }
 }

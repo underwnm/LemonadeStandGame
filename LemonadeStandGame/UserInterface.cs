@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace LemonadeStandGame
@@ -10,12 +11,15 @@ namespace LemonadeStandGame
     {
         public void DisplayMenuMessage()
         {
-            Console.WriteLine("HI! \tWELCOME TO LEMONADE STAND! IN THIS GAME");
-            Console.WriteLine("YOU WILL BE IN CHARGE OF RUNNG YOUR OWN LEMONADE");
-            Console.WriteLine("STAND. YOU CAN COMPETE WITH ANY AMOUNT OF PEOPLE");
-            Console.WriteLine("THAT YOU WANT. THE GOAL IS TO MAKE THE HIGHEST");
-            Console.WriteLine("PROFIT. SALES WILL BE AFFECTED BY YOUR RECIPE,");
-            Console.WriteLine("WEATHER, AND PRICE.");
+            Console.WriteLine("WELCOME TO LEMONADE STAND! THIS IS A GAME TO SEE WHO CAN GET THE HIGHEST SCORE!\n");
+            Thread.Sleep(500);
+            Console.WriteLine("-------------------------------------------------------------------------------");
+            Console.WriteLine("\tIN THIS GAME YOU WILL BE IN CHARGE OF RUNNING YOUR OWN LEMONADE");
+            Console.WriteLine("\tSTAND. YOU CAN COMPETE WITH ANY AMOUNT OF PEOPLE THAT YOU WANT.");
+            Console.WriteLine("\tTHE GOAL IS TO MAKE THE HIGHEST PROFIT. SALES WILL BE AFFECTED BY");
+            Console.WriteLine("\tYOUR RECIPE, THE WEATHER, AND THE PER GLASS PRICE OF YOUR RECIPE.");
+            Thread.Sleep(500);
+            Console.WriteLine("--------------------------------------------------------------------------------");
         }
         public void DisplayMenuNewGame()
         {
@@ -29,15 +33,13 @@ namespace LemonadeStandGame
         }
         public void DisplayMenuInstructions()
         {
-            Console.WriteLine("TO MANAGE YOUR LEMONADE STAND, YOU WILL NEED TO");
-            Console.WriteLine("THESE DECISIONS EVERY DAY.");
-            Console.WriteLine("1. THE AMOUNT OF SUGAR, ICE, AND LEMONS IN YOUR RECIPE");
-            Console.WriteLine("2. WHAT PRICE TO SELL EACH GLASS FOR");
-            Console.WriteLine("YOU WILL BEGIN WITH $20.00 CASH. THEN CREATE A RECIPE");
-            Console.WriteLine("WITH SUGAR, ICE, AND LEMONS (WATER IF FREE).");
-            Console.WriteLine("YOUR COST TO MAKE LEMONADE WILL DEPEND ON YOUR RECIPE.");
-            Console.WriteLine("YOUR EXPENSES ARE THE SUM OF THE COST OF THE INGREDIANTS");
-            Console.WriteLine("USED IN MAKING YOUR RECIPE.");
+            Console.WriteLine("TO MANAGE YOUR LEMONADE STAND, YOU WILL NEED TO MAKE THESE DECISIONS EVERY DAY.\n");
+            Console.WriteLine("\t\t1. THE AMOUNT OF SUGAR, ICE, AND LEMONS");
+            Console.WriteLine("\t\t2. WHAT PRICE TO SELL EACH GLASS FOR\n");
+            Console.WriteLine("\tYOU WILL BEGIN WITH A TOTAL OF $20.00 CASH. YOU THEN");
+            Console.WriteLine("\tCREATE A RECIPE WITH SUGAR, LEMONS, AND ICE. YOUR TOTAL COST");
+            Console.WriteLine("\tTO MAKE LEMONADE WILL DEPEND ON YOUR RECIPE. YOUR EXPENSES");
+            Console.WriteLine("\tARE THE SUM OF THE INGREDIANT COSTS IN YOUR RECIPE.");
         }
         public void DisplayDay(int day)
         {
@@ -58,6 +60,10 @@ namespace LemonadeStandGame
         public void ClearScreen()
         {
             Console.Clear();
+        }
+        public void AddSpace()
+        {
+            Console.WriteLine();
         }
     }
 }

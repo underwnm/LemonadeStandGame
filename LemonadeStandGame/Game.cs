@@ -10,18 +10,26 @@ namespace LemonadeStandGame
     {
         UserInterface output = new UserInterface();
 
-        public void ExecuteGame()
+        public void ExecuteStartOfGame()
         {
             output.DisplayMenuMessage();
+            output.AddSpace();
             output.DisplayMenuNewGame();
-            Console.ReadLine();
+            GetUserInput();
+            output.AddSpace();
             output.DisplayMenuNumberOfPeople();
-            Console.ReadLine();
+            GetUserInput();
             output.ClearScreen();
             output.DisplayMenuInstructions();
+            output.AddSpace();
             output.DisplayContinueOrExit();
-            Console.ReadLine();
+            GetUserInput();
             output.ClearScreen();
+        }
+        public string GetUserInput()
+        {
+            string userInput = Console.ReadLine();
+            return userInput;
         }
     }
 }

@@ -8,7 +8,7 @@ namespace LemonadeStandGame
 {
     class Player
     {
-        private int startingMoney = 2000;
+        //private int startingMoney = 2000;
 
     }
 }
