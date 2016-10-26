@@ -8,26 +8,33 @@ namespace LemonadeStandGame
 {
     class Recipe
     {
-        Player player;
-        public Recipe(Player player)
+        public int[] ingredients; 
+        public Recipe()
         {
-            this.player = player;
+            ingredients = new int[4]; //#Lemons, #Sugar, #Ice, #Cups
         }
         public void GetRecipe()
         {
             Console.WriteLine("Create a recipe for tomorrow");
-            Console.WriteLine("Each recipe creates a 1 gallon pitcher\n This will create 8 pints to sell to potential customers");
+            Console.WriteLine("Each recipe creates a 1 gallon pitcher\nThis will create 8 pints to sell to potential customers");
             Console.WriteLine("");
             Console.WriteLine("Enter how many tablespoons of sugar...");
-            player.recipe[0] = GetUserInput();
+            ingredients[0] = GetUserInput();
             Console.WriteLine("Enter how many lemons...");
-            player.recipe[1] = GetUserInput();
+            ingredients[1] = GetUserInput();
             Console.WriteLine("Enter how many cups of ice...");
-            player.recipe[2] = GetUserInput();
+            ingredients[2] = GetUserInput();
+            Console.WriteLine("Enter how many pint cups you want...");
+            ingredients[3] = GetUserInput();
         }
         private int GetUserInput()
         {
-            int userInput = Convert.ToInt16(Console.ReadLine().ToUpper());
+            int userInput;
+            if (!int.TryParse(Console.ReadLine(), out userInput))
+            {
+                Console.WriteLine("Invalid Number");
+                GetUserInput();
+            }
             return userInput;
         }
     }

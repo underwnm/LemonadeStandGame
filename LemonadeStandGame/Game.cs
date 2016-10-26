@@ -8,15 +8,18 @@ namespace LemonadeStandGame
 {
     class Game
     {
-        UserInterface output = new UserInterface();
-        Player player = new Player();
+        UserInterface display;
+        Player player;
         Day day;
         int currentDay = 0;
-
+        public Game()
+        {
+            display = new UserInterface();
+        }
         public void ExecuteStartOfGame()
         {
             ExecuteGameWelcome();
-            player.GetPlayerName();
+            GetPlayerName();
 
             while (currentDay < 8)
             {
@@ -27,24 +30,30 @@ namespace LemonadeStandGame
         }
         private void ExecuteGameWelcome()
         {
-            output.DisplayMenuMessage();
-            output.AddSpace();
-            output.DisplayMenuNewGame();
+            display.DisplayMenuMessage();
+            display.AddSpace();
+            display.DisplayMenuNewGame();
             GetUserInput();
-            output.AddSpace();
-            output.DisplayMenuNumberOfPeople();
+            display.AddSpace();
+            display.DisplayMenuNumberOfPeople();
             GetUserInput();
-            output.ClearScreen();
-            output.DisplayMenuInstructions();
-            output.AddSpace();
-            output.DisplayContinueOrExit();
+            display.ClearScreen();
+            display.DisplayMenuInstructions();
+            display.AddSpace();
+            display.DisplayContinueOrExit();
             GetUserInput();
-            output.ClearScreen();
+            display.ClearScreen();
         }
         private string GetUserInput()
         {
             string userInput = Console.ReadLine();
             return userInput;
+        }
+        private void GetPlayerName()
+        {
+            Console.WriteLine("Enter the owner of the lemonade stand");
+            player.name = Console.ReadLine().ToUpper();
+            Console.Clear();
         }
     }
 }

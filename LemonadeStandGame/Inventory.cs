@@ -8,47 +8,45 @@ namespace LemonadeStandGame
 {
     class Inventory
     {
-        Player player;
+        public List<Lemon> lemons;
+        public List<Sugar> sugar;
+        public List<Ice> ice;
+        public List<Cup> cups;
+        public Inventory()
+        {
+            lemons = new List<Lemon>();
+            sugar = new List<Sugar>();
+            ice = new List<Ice>();
+            cups = new List<Cup>();
+        }
+        public void AddLemon(int amount)
+        {         
+            for (int i = 0; i < amount; i++)
+            {
+                lemons.Add(new Lemon());
+            }
+        }
+        public void AddSugar(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                sugar.Add(new Sugar());
+            }
+        }
+        public void AddIce(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                ice.Add(new Ice());
+            }
+        }
+        public void AddCup(int amount)
+        {
+            for (int i = 0; i < amount; i++)
+            {
+                cups.Add(new Cup());
+            }
+        }
 
-        public Inventory(Player player)
-        {
-            this.player = player;
-        }
-        public void ExecuteInventory()
-        {
-            DisplayCurrentInventory();
-            CheckRecipeVsInventory();
-        }
-        private void DisplayCurrentInventory()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("Let's check your supply...");
-            Console.WriteLine("------------------------------------");
-            Console.WriteLine("You have {0} tablespoons of sugar", player.ingredients[0]);
-            Console.WriteLine("You have {0} lemons", player.ingredients[1]);
-            Console.WriteLine("You have {0} cups of ice", player.ingredients[2]);
-            Console.WriteLine("You have ${0} available in cash", player.money);
-            Console.WriteLine("------------------------------------");
-        }
-        
-        private void CheckRecipeVsInventory()
-        {
-            int product;
-            if (player.ingredients[0] < player.recipe[0] || player.ingredients[1] < player.recipe[1] || player.ingredients[2] < player.recipe[2])
-            {
-                product = 0;
-                Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade**", product);                
-            }
-            else
-            {
-                int maxSugar = player.ingredients[0] / player.recipe[0];
-                int maxLemons = player.ingredients[1] / player.recipe[1];
-                int maxIce = player.ingredients[2] / player.recipe[2];
-                product = new int[] { maxSugar, maxLemons, maxIce }.Min();
-                Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade and {1} pints to sell**", product, product*8);
-            }
-        }
     }
 }

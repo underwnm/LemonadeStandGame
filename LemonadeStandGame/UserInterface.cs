@@ -9,6 +9,9 @@ namespace LemonadeStandGame
 {
     class UserInterface
     {
+        public Player player;
+        public Day day;
+
         public void DisplayMenuMessage()
         {
             Console.WriteLine("WELCOME TO LEMONADE STAND! THIS IS A GAME TO SEE WHO CAN GET THE HIGHEST SCORE!\n");
@@ -64,6 +67,50 @@ namespace LemonadeStandGame
         public void AddSpace()
         {
             Console.WriteLine();
+        }
+
+        private void DisplayCurrentInventory()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Let's check your supply...");
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("You have {0} lemons", player.stand.inventory.lemons.Count());
+            Console.WriteLine("You have {0} tablespoons of sugar", player.stand.inventory.sugar.Count());
+            Console.WriteLine("You have {0} cups of ice", player.stand.inventory.ice.Count());
+            Console.WriteLine("You have {0} pint sized cups", player.stand.inventory.cups.Count());
+            Console.WriteLine("You have ${0} available in cash", player.wallet.cash);
+            Console.WriteLine("------------------------------------");
+        }
+        private void DisplayItemPrices()
+        {
+            Console.WriteLine("WELCOME TO {0}'S FAVORITE STORE", player.name);
+            Console.WriteLine("");
+            Console.WriteLine("These are today's prices");
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("1 lemon costs {0}", day.store.cost[0]);
+            Console.WriteLine("4 lb bag of sugar costs {0}", day.store.cost[1]);
+            Console.WriteLine("5 lb bag of ice costs {0}", day.store.cost[2]);
+            Console.WriteLine("50 pack of pint sized plastic cups costs {0}", day.store.cost[3]);
+            Console.WriteLine("------------------------------------");
+        }
+        private void DisplayRecipe()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Let's check your recipe...");
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("{0} lemons", player.recipe.ingredients[0]);
+            Console.WriteLine("{0} tablespoon of sugar", player.recipe.ingredients[1]);
+            Console.WriteLine("{0} cups of ice", player.recipe.ingredients[2]);
+            Console.WriteLine("------------------------------------");
+        }
+        private void DisplayBuyChoices()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("Select which product you want to purchase...");
+            Console.WriteLine("1. Lemons");
+            Console.WriteLine("2. 4 lb bag of sugar (240 tablespoons per bag)");
+            Console.WriteLine("3. 5 lb bag of ice (10 cups per bag)");
+            Console.WriteLine("4. Buy Nothing");
         }
     }
 }

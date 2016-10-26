@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace LemonadeStandGame
 {
-    class Results
+    class Lemon : Item
     {
+        public Lemon() :base ("Lemons")
+        {
+
+        }
     }
 }

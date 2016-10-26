@@ -8,11 +8,23 @@ namespace LemonadeStandGame
 {
     class Customer
     {
-        public Customer()
+        public int possibleCustomers;
+        public Customer(double price, double[] weatherDemand)
         {
 
         }
-        //public double customerDemand;
-        //public int customerType;
+        public bool CheckBuyLemonade()
+        {
+            bool buy = true;
+            return buy;
+        }
+        public void CheckPrice()
+        {
+
+        }
+        public void CheckTastePreference()
+        {
+
+        }
     }
 }

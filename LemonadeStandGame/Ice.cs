@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace LemonadeStandGame
 {
-    public abstract class RandomEvent
+    class Ice : Item
     {
+        public Ice() :base ("Ice")
+        {
 
+        }
     }
 }

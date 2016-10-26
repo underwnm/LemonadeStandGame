@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace LemonadeStandGame
 {
-    class Player
+    class Item
     {
         public string name;
-        public Wallet wallet;
-        public Recipe recipe;
-        public Stand stand;
-        public UserInterface display;
-        public double money = 20.00;
-
-        public Player(string Name)
+        public Item(string Name)
         {
             name = Name;
         }

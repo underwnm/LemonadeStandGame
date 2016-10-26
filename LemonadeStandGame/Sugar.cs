@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace LemonadeStandGame
 {
-    class Sell
+    class Sugar : Item
     {
-        Player player;
-        public Sell(Player player)
+        public Sugar() :base ("Sugar")
         {
-            this.player = player;
+
         }
     }
 }

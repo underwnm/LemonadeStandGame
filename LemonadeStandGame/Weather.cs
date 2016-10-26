@@ -8,82 +8,63 @@ namespace LemonadeStandGame
 {
     class Weather
     {
-        //int[] weatherType = new int[5]; // "Showers", "Partly Cloudy", "Cloudy", "Mostly Sunny", "Sunny"
-        double[] weatherDemand = new double[5];
-        int weatherType;
-        string weather;
-        int forecastTemperature;
-        int actualTemperature;
+        string[] weather = new string[2];
+        public int weatherDemand;
+        public int weatherType;
+        public int forecastTemperature;
+        public int actualTemperature;
 
-        public void GetTomorrowForecast()
+        public string[] GetTomorrowForecast()
         {
             weatherType = GetRandomNumber();
             GetTemperature(weatherType);
+            weather[1] = forecastTemperature.ToString();            
             switch (weatherType)
             {
                 case 0:
-                    weather = "Showers";
-                    DisplayTomorrowForecast(weather, forecastTemperature);
+                    weather[0] = "Showers";
                     break;
                 case 1:
-                    weather = "Cloudy";
-                    DisplayTomorrowForecast(weather, forecastTemperature);
+                    weather[0] = "Cloudy";
                     break;
                 case 2:
-                    weather = "Partly Cloudy";
-                    DisplayTomorrowForecast(weather, forecastTemperature);
+                    weather[0] = "Partly Cloudy";
                     break;
                 case 3:
-                    weather = "Mostly Sunny";
-                    DisplayTomorrowForecast(weather, forecastTemperature);
+                    weather[0] = "Mostly Sunny";
                     break;
                 case 4:
-                    weather = "Sunny";
-                    DisplayTomorrowForecast(weather, forecastTemperature);
+                    weather[0] = "Sunny";
                     break;
             }
+            return weather;
         }
-        private void DisplayTomorrowForecast(string weatherType, int temperature)
-        {
-            Console.WriteLine("");
-            Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine(" Tomororw's forecast calls for {0} and a High of {1}°", weatherType, temperature);
-            Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("");
-        }
-        public void GetActualWeather()
+        public string[] GetActualWeather()
         {
             switch (weatherType)
             {
                 case 0:
-                    weatherDemand[0] = .0;
-                    DisplayActualWeather(weather, actualTemperature);
+                    weatherDemand = 5;
+                    weather[1] = actualTemperature.ToString();
                     break;
                 case 1:
-                    weatherDemand[1] = .25;
-                    DisplayActualWeather(weather, actualTemperature);
+                    weatherDemand = 10;
+                    weather[1] = actualTemperature.ToString();
                     break;
                 case 2:
-                    weatherDemand[2] = .5;
-                    DisplayActualWeather(weather, actualTemperature);
+                    weatherDemand = 15;
+                    weather[1] = actualTemperature.ToString();
                     break;
                 case 3:
-                    weatherDemand[3] = .75;
-                    DisplayActualWeather(weather, actualTemperature);
+                    weatherDemand = 30;
+                    weather[1] = actualTemperature.ToString();
                     break;
                 case 4:
-                    weatherDemand[4] = 1;
-                    DisplayActualWeather(weather, actualTemperature);
+                    weatherDemand = 50;
+                    weather[1] = actualTemperature.ToString();
                     break;
             }
-        }
-        private void DisplayActualWeather(string actualWeather, int actualTemperature)
-        {
-            Console.WriteLine("");
-            Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("     Today is {0} and a High of {1}°", actualWeather, actualTemperature);
-            Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("");
+            return weather;
         }
         private void GetTemperature(int weatherType)
         {
@@ -123,6 +104,13 @@ namespace LemonadeStandGame
             double multiplier = random.NextDouble();
             int temperatue = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
             return temperatue;
+        }
+        public void GetWeatherDemand()
+        {
+            for (int i = 67; i < actualTemperature; i++)
+            {
+                weatherDemand++;
+            }
         }
     }
 }
