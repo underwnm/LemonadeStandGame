@@ -11,7 +11,7 @@ namespace LemonadeStandGame
         UserInterface display;
         Player player;
         Day day;
-        int currentDay = 0;
+        int currentDay = 1;
         public Game()
         {
             display = new UserInterface();
@@ -23,17 +23,15 @@ namespace LemonadeStandGame
 
             while (currentDay < 8)
             {
+                display.DisplayDay(currentDay);
                 day = new Day(player);
-                day.ExecuteDay();
+                day.ExecuteStartDay();
                 currentDay++;
             }
         }
         private void ExecuteGameWelcome()
         {
             display.DisplayMenuMessage();
-            display.AddSpace();
-            display.DisplayMenuNewGame();
-            GetUserInput();
             display.AddSpace();
             display.DisplayMenuNumberOfPeople();
             GetUserInput();
@@ -52,7 +50,8 @@ namespace LemonadeStandGame
         private void GetPlayerName()
         {
             Console.WriteLine("Enter the owner of the lemonade stand");
-            player.name = Console.ReadLine().ToUpper();
+            string name = Console.ReadLine().ToUpper();
+            player = new Player(name);
             Console.Clear();
         }
     }

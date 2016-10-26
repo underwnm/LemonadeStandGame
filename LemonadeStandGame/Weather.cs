@@ -8,13 +8,13 @@ namespace LemonadeStandGame
 {
     class Weather
     {
-        string[] weather = new string[2];
+        public string[] weather = new string[2];
         public int weatherDemand;
         public int weatherType;
         public int forecastTemperature;
         public int actualTemperature;
 
-        public string[] GetTomorrowForecast()
+        public void GetTomorrowForecast()
         {
             weatherType = GetRandomNumber();
             GetTemperature(weatherType);
@@ -37,9 +37,8 @@ namespace LemonadeStandGame
                     weather[0] = "Sunny";
                     break;
             }
-            return weather;
         }
-        public string[] GetActualWeather()
+        public void GetActualWeather()
         {
             switch (weatherType)
             {
@@ -64,7 +63,27 @@ namespace LemonadeStandGame
                     weather[1] = actualTemperature.ToString();
                     break;
             }
-            return weather;
+        }
+        public int GetWeatherDemand()
+        {
+            for (int i = 0; i <= weatherType; i++)
+            {
+                if (i <= 3)
+                {
+                    int number = RandomNumberBetween(5, 10);
+                    weatherDemand = number + weatherDemand;
+                }
+                else if (i > 3)
+                {
+                    int number = RandomNumberBetween(20, 30);
+                    weatherDemand = number + weatherDemand;
+                }
+            }
+            for (int i = 67; i < actualTemperature; i++)
+            {
+                weatherDemand++;
+            }
+            return weatherDemand;
         }
         private void GetTemperature(int weatherType)
         {
@@ -104,13 +123,6 @@ namespace LemonadeStandGame
             double multiplier = random.NextDouble();
             int temperatue = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
             return temperatue;
-        }
-        public void GetWeatherDemand()
-        {
-            for (int i = 67; i < actualTemperature; i++)
-            {
-                weatherDemand++;
-            }
         }
     }
 }
