@@ -33,6 +33,11 @@ namespace LemonadeStandGame
                 Console.WriteLine("Invalid Number");
                 GetUserInput();
             }
+            if (userInput == 0)
+            {
+                Console.WriteLine("Must at least have 1 of each ingredient");
+                GetUserInput();
+            }
             return userInput;
         }
     }

@@ -9,15 +9,16 @@ namespace LemonadeStandGame
     class Customer
     {
         Random random;
-        public Customer()
+        Player player;
+        public Customer(Player player)
         {
             random = new Random();
+            this.player = player;
         }
-        public bool CheckBuyLemonade(Player player)
+        public bool CheckBuyLemonade()
         {
-            if (CheckTastePreference(player) && CheckPrice(player))
-            {
-                player.dailyProfit = player.dailyProfit + player.pintPrice;
+            if (CheckTastePreference() && CheckPrice())
+            {                               
                 return true;
             }
             else
@@ -25,10 +26,10 @@ namespace LemonadeStandGame
                 return false;
             }
         }
-        private bool CheckPrice(Player player)
+        private bool CheckPrice()
         {
             double HighPrice = RandomNumberBetween(0, 4);
-            if (player.pintPrice < HighPrice)
+            if (player.stand.pintPrice < HighPrice)
             {
                 return true;
             }
@@ -37,7 +38,7 @@ namespace LemonadeStandGame
                 return false;
             }
         }
-        private bool CheckTastePreference(Player player)
+        private bool CheckTastePreference()
         {
             double chanceToBuy;
             double tastePreference = RandomNumberBetween(2, 8);
@@ -52,20 +53,20 @@ namespace LemonadeStandGame
             tastePreference = RandomNumberBetween(25, 45);
             if (player.recipe.ingredients[1] >= tastePreference)
             {
-                chanceToBuy = .4;
+                chanceToBuy = .4 + chanceToBuy;
             }
             else
             {
-                chanceToBuy = .25;
+                chanceToBuy = .25 + chanceToBuy;
             }
             tastePreference = RandomNumberBetween(1, 3);
             if (player.recipe.ingredients[2] >= tastePreference)
             {
-                chanceToBuy = .4;
+                chanceToBuy = .4 + chanceToBuy;
             }
             else
             {
-                chanceToBuy = .25;
+                chanceToBuy = .25 + chanceToBuy;
             }
             if (chanceToBuy >= 1)
             {
@@ -81,7 +82,7 @@ namespace LemonadeStandGame
         {
             Random random = new Random();
             double multiplier = random.NextDouble();
-            double number = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
+            double number = minValue + (multiplier * (maxvalue - minValue));
             return number;
         }
     }

@@ -75,7 +75,7 @@ namespace LemonadeStandGame
             Console.WriteLine("1 lemon costs {0}", store.cost[0]);
             Console.WriteLine("4 lb bag of sugar costs {0}", store.cost[1]);
             Console.WriteLine("5 lb bag of ice costs {0}", store.cost[2]);
-            Console.WriteLine("50 pack of pint sized plastic cups cost {0}", store.cost[3]);
+            Console.WriteLine("100 pack of pint sized plastic cups cost {0}", store.cost[3]);
             Console.WriteLine("------------------------------------");
         }
         public void DisplayCurrentInventory(Player player)
@@ -100,15 +100,6 @@ namespace LemonadeStandGame
             Console.WriteLine("{0} cups of ice", player.recipe.ingredients[2]);
             Console.WriteLine("------------------------------------");
         }
-        public void DisplayBuyChoices()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("Select which product you want to purchase...");
-            Console.WriteLine("1. Lemons");
-            Console.WriteLine("2. 4 lb bag of sugar (240 tablespoons per bag)");
-            Console.WriteLine("3. 5 lb bag of ice (10 cups per bag)");
-            Console.WriteLine("4. Buy Nothing");
-        }
         public void DisplayActualWeather(Weather weather)
         {
             Console.WriteLine("");
@@ -132,9 +123,23 @@ namespace LemonadeStandGame
             Console.WriteLine("           TIME TO SETUP YOUR STAND FOR TODAY");
             Console.WriteLine("----------------------------------------------------------");
         }
+        public void DisplayPintsSold(Player player)
+        {
+            Console.WriteLine("You sold {0} pints of lemonade today", player.stand.pintsSold);
+        }
         public void DisplayProfit(Player player)
         {
-            Console.WriteLine("Today you made {0} and have {1} in your wallet", player.dailyProfit, player.wallet.money);
+            Console.WriteLine("Today's Profit: {0}", Math.Round(player.stand.dailyProfit, 2));
+            Console.WriteLine("Total Gross Proft: {0}", Math.Round(player.stand.grossProfit, 2));
+            Console.WriteLine("How much money in your wallet: {0}", Math.Round(player.wallet.money, 2));
+        }
+        public void DisplayHowManyPitchers()
+        {
+            Console.WriteLine("How many pitchers do you want to make for today?");
+        }
+        public void DisplayHowMuchPerPint()
+        {
+            Console.WriteLine("Enter the price per pint of lemonade for the day.");
         }
     }
 }

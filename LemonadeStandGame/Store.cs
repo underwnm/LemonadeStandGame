@@ -49,7 +49,6 @@ namespace LemonadeStandGame
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[1];
-                amount = ConvertSugarToTablespoons(amount);
                 player.stand.inventory.AddSugar(amount);
             }
             else
@@ -65,7 +64,6 @@ namespace LemonadeStandGame
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[2];
-                amount = ConvertIceBagToCups(amount);
                 player.stand.inventory.AddIce(amount);
             }
             else
@@ -81,7 +79,6 @@ namespace LemonadeStandGame
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[3];
-                amount = ConvertCupBagToCups(amount);
                 player.stand.inventory.AddCup(amount);
             }
             else
@@ -102,21 +99,6 @@ namespace LemonadeStandGame
             {
                 return true;
             }
-        }
-        private int ConvertSugarToTablespoons(int amount)
-        {
-            amount = amount * 240;
-            return amount;
-        }
-        private int ConvertIceBagToCups(int amount)
-        {
-            amount = amount * 10;
-            return amount;
-        }
-        private int ConvertCupBagToCups(int amount)
-        {
-            amount = amount * 50;
-            return amount;
         }
         private int GetUserInput()
         {

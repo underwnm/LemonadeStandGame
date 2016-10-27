@@ -33,14 +33,13 @@ namespace LemonadeStandGame
         {
             display.DisplayMenuMessage();
             display.AddSpace();
-            display.DisplayMenuNumberOfPeople();
-            GetUserInput();
-            display.ClearScreen();
             display.DisplayMenuInstructions();
             display.AddSpace();
             display.DisplayContinueOrExit();
             GetUserInput();
             display.ClearScreen();
+            //display.DisplayMenuNumberOfPeople();
+            //GetUserInput();
         }
         private string GetUserInput()
         {

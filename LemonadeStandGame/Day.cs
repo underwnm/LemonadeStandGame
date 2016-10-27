@@ -8,8 +8,8 @@ namespace LemonadeStandGame
 {
     class Day
     {
+        List<Customer> customer;
         public Player player;
-        public Customer customer;
         public Weather weather;
         public Store store;
         public UserInterface display;
@@ -19,27 +19,28 @@ namespace LemonadeStandGame
             this.player = player;
             display = new UserInterface();
             weather = new Weather();
-            customer = new Customer();
             store = new Store(player);
+            customer = new List<Customer>();
         }
         public void ExecuteStartDay()
         {
             weather.GetTomorrowForecast();
             display.DisplayTomorrowForecast(weather);
-            CreateRecipe();
-            GoToStore();
+            player.recipe.GetRecipe();
+            ProceedToStore();
             ShopAtStore();
-            display.DisplayAtStand();
             weather.GetActualWeather();
-            NumberOfSales();
+            display.DisplayActualWeather(weather);
+            DetermineCustomerDemand();
+            ProceedToStand();
             ExecuteEndDay();
         }
-        public void GoToStore()
+        private void ProceedToStore()
         {
             display.DisplayToStore();
             display.ProceedWithGame();
         }
-        public void ShopAtStore()
+        private void ShopAtStore()
         {
             bool proceed = true;
             while (proceed)
@@ -47,53 +48,56 @@ namespace LemonadeStandGame
                 display.DisplayItemPrices(store);
                 display.DisplayCurrentInventory(player);
                 display.DisplayRecipe(player);
-                CheckRecipeVsInventory();
+                player.stand.CheckRecipeVsInventory();
                 proceed = store.ExecuteStore();
                 display.ClearScreen();
             }
         }
-        public void NumberOfSales()
+        private void ProceedToStand()
         {
-            for (int i = 0; i < weather.weatherDemand; i++)
-            {
-                customer.CheckBuyLemonade(player);               
-            }
-        }
-        public void CreateRecipe()
-        {
-            player.recipe.GetRecipe();
-        }
-        private void CheckRecipeVsInventory()
-        {
-            int product;
-            if (player.stand.inventory.lemons.Count() <= player.recipe.ingredients[0] || player.stand.inventory.sugar.Count() <= player.recipe.ingredients[1] || player.stand.inventory.ice.Count() <= player.recipe.ingredients[2])
-            {
-                product = 0;
-                Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade**", product);
-                Console.WriteLine("");
-            }
-            else
-            {
-                int maxLemons = player.stand.inventory.lemons.Count() / player.recipe.ingredients[0];
-                int maxSugar = player.stand.inventory.sugar.Count() / player.recipe.ingredients[1];
-                int maxIce = player.stand.inventory.ice.Count() / player.recipe.ingredients[2];
-                product = new int[] { maxLemons, maxSugar, maxIce }.Min();
-                Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade and sell {1} pints size cups**", product, product * 8);
-                Console.WriteLine("");
-            }
-        }
-        private void GetDailyProfit()
-        {
-            double profit = player.dailyProfit + player.wallet.money;
+            display.DisplayAtStand();
+            player.stand.CheckRecipeVsInventory();
+            display.DisplayHowManyPitchers();
+            player.stand.SetNumberOfPitchers();
+            display.DisplayHowMuchPerPint();
+            player.stand.SetPintPrice();
+            player.stand.FindNumberOfSales(customer);
+            display.DisplayPintsSold(player);
+            player.stand.AddProfitToWallet(store);
+            display.DisplayProfit(player);
+            player.stand.UpdateInventory();
         }
         private void ExecuteEndDay()
         {
-            GetDailyProfit();
-            display.DisplayProfit(player);
             Console.WriteLine("START NEXT DAY");
             display.ProceedWithGame();
+        }
+        public void DetermineCustomerDemand()
+        {
+            for (int i = 0; i <= weather.weatherType; i++)
+            {
+                int customers;
+                if (i <= 3)
+                {
+                    customers = weather.RandomNumberBetween(5, 10);
+                    for (int j = 0; j < customers; j++)
+                    {
+                        customer.Add(new Customer(player));
+                    }
+                }
+                else if (i > 3)
+                {
+                    customers = weather.RandomNumberBetween(20, 30);
+                    for (int j = 0; j < customers; j++)
+                    {
+                        customer.Add(new Customer(player));
+                    }
+                }
+            }
+            for (int i = 67; i < weather.temperature[1]; i++)
+            {
+                customer.Add(new Customer(player));
+            }
         }
     }
 }
