@@ -10,9 +10,9 @@ namespace LemonadeStandGame
     {
         Random random;
         Player player;
-        public Customer(Player player)
+        public Customer(Player player, Random random)
         {
-            random = new Random();
+            this.random = random;
             this.player = player;
         }
         public bool CheckBuyLemonade()
@@ -59,7 +59,7 @@ namespace LemonadeStandGame
             {
                 chanceToBuy = .25 + chanceToBuy;
             }
-            tastePreference = RandomNumberBetween(1, 3);
+            tastePreference = RandomNumberBetween(1, 4);
             if (player.recipe.ingredients[2] >= tastePreference)
             {
                 chanceToBuy = .4 + chanceToBuy;
@@ -80,7 +80,6 @@ namespace LemonadeStandGame
         }
         private double RandomNumberBetween(int minValue, int maxvalue)
         {
-            Random random = new Random();
             double multiplier = random.NextDouble();
             double number = minValue + (multiplier * (maxvalue - minValue));
             return number;

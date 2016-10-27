@@ -13,10 +13,9 @@ namespace LemonadeStandGame
         public Recipe recipe;
         public Stand stand;
 
-        public Player(string Name)
+        public Player(string name)
         {
-            name = Name;
-            totalNetProfit = 0;
+            this.name = name;
             wallet = new Wallet();
             recipe = new Recipe();
             stand = new Stand(this);

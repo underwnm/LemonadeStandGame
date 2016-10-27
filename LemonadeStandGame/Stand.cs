@@ -106,9 +106,9 @@ namespace LemonadeStandGame
         {
             dailyIncome = pintsSold * pintPrice;
             grossProfit = dailyIncome - ((pitchers * player.recipe.ingredients[0]) * (store.cost[0]));
-            grossProfit = grossProfit - ((pitchers * player.recipe.ingredients[1]) * (store.cost[1] / 240));
-            grossProfit = grossProfit - ((pitchers * player.recipe.ingredients[2]) * (store.cost[2] / 10));
-            grossProfit = grossProfit - ((pitchers * pintsPerPitcher) * (store.cost[3] / 100));
+            grossProfit = grossProfit - ((pitchers * player.recipe.ingredients[1]) * (store.cost[1] / store.tablespoonsOfSugarPerBag));
+            grossProfit = grossProfit - ((pitchers * player.recipe.ingredients[2]) * (store.cost[2] / store.cupsOfIcePerBag));
+            grossProfit = grossProfit - ((pitchers * pintsPerPitcher) * (store.cost[3] / store.cupsPerBag));
             player.wallet.money = player.wallet.money + dailyIncome;
         }
     }

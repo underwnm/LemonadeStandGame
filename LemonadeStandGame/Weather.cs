@@ -98,8 +98,8 @@ namespace LemonadeStandGame
         public int RandomNumberBetween(int minValue, int maxvalue)
         {
             double multiplier = random.NextDouble();
-            int temperatue = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
-            return temperatue;
+            int number = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));
+            return number;
         }
     }
 }

@@ -132,14 +132,13 @@ namespace LemonadeStandGame
         }
         public void DisplayPintsSold(Player player)
         {
-            Console.WriteLine("Today out of the {0} pints of lemonade you made...\nYou sold {1} to customers...", player.stand.pintsSold, player.stand.pitchers*player.stand.pintsPerPitcher);
+            Console.WriteLine("Today out of the {0} pints of lemonade you made...\nYou sold {1} to customers...", player.stand.pitchers * player.stand.pintsPerPitcher, player.stand.pintsSold);
         }
         public void DisplayProfit(Player player)
         {
             Console.WriteLine("Today's Income: ${0}", player.stand.dailyIncome.ToString("#.##"));
             Console.WriteLine("Today's Gross Proft: ${0}", player.stand.grossProfit.ToString("#.##"));
-            Console.WriteLine("Total Net Profit: ${0}", player.totalNetProfit.ToString("#.##"));
-            Console.WriteLine("Your Wallet: ${0}", player.wallet.money.ToString("#.##"));
+            Console.WriteLine("Total Net Profit: ${0}", player.wallet.money-player.wallet.startingMoney);
         }
         public void DisplayHowManyPitchers()
         {
@@ -152,7 +151,7 @@ namespace LemonadeStandGame
         public void DisplayEndOfGame(Player player)
         {
             Console.WriteLine("You have finished your 7 day project of running a lemonade stand.");
-            Console.WriteLine("Total Net Profit: ${0}", player.totalNetProfit.ToString("#.##"));
+            Console.WriteLine("Total Net Profit: ${0}", player.wallet.money.ToString("#.##"));
         }
     }
 }

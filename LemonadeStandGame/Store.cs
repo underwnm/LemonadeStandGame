@@ -9,12 +9,12 @@ namespace LemonadeStandGame
 {
     class Store
     {
-        public Player player;
         public double[] cost;
+        public int tablespoonsOfSugarPerBag = 240;
+        public int cupsOfIcePerBag = 10;
+        public int cupsPerBag = 100;
+        public Player player;
         private Random random;
-        private int tablespoonsOfSugarPerBag = 240;
-        private int cupsOfIcePerBag = 10;
-        private int cupsPerBag = 100;
         public Store (Player player)
         {
             this.player = player;
@@ -31,7 +31,7 @@ namespace LemonadeStandGame
         public void SellLemons()
         {
             Console.WriteLine("How many lemons do you want to purchase?");
-            int amount = GetUserInput();
+            int amount = GetInput();
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[0];
@@ -47,7 +47,7 @@ namespace LemonadeStandGame
         public void SellSugar()
         {
             Console.WriteLine("How many bags of sugar do you want to purchase? (each bag has {0} Tbsp)", tablespoonsOfSugarPerBag);
-            int amount = GetUserInput();
+            int amount = GetInput();
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[1];
@@ -63,7 +63,7 @@ namespace LemonadeStandGame
         public void SellIce()
         {
             Console.WriteLine("How many bags of ice do you want to purchase? (each bag has {0} cups)", cupsOfIcePerBag);
-            int amount = GetUserInput();
+            int amount = GetInput();
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[2];
@@ -79,7 +79,7 @@ namespace LemonadeStandGame
         public void SellCup()
         {
             Console.WriteLine("How many bags of pint sized cups do you want to purchase? (each bag has {0} cups)", cupsPerBag);
-            int amount = GetUserInput();
+            int amount = GetInput();
             if (player.wallet.CheckWallet(amount))
             {
                 player.wallet.money = player.wallet.money - amount * cost[3];
@@ -110,19 +110,18 @@ namespace LemonadeStandGame
                 return PromptBuyMore();
             }
         }
-        private int GetUserInput()
+        private int GetInput()
         {
             int userInput;
             if (!int.TryParse(Console.ReadLine(), out userInput))
             {
                 Console.WriteLine("Invalid Number");
-                return GetUserInput();
+                return GetInput();
             }
             return userInput;
         }
         private double RandomNumberBetween(double minValue, double maxvalue)
         {
-            Random random = new Random();
             double next = random.NextDouble();
             return minValue + (next * (maxvalue - minValue));
         }

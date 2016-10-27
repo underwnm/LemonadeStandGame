@@ -17,30 +17,30 @@ namespace LemonadeStandGame
         public void GetNumberOfLemons()
         {
             Console.WriteLine("Enter how many lemons...");
-            ingredients[0] = GetUserInput();
+            ingredients[0] = GetInput();
         }
         public void GetTablespoonsOfSugar()
         {
             Console.WriteLine("Enter how many tablespoons of sugar...");
-            ingredients[1] = GetUserInput();
+            ingredients[1] = GetInput();
         }
         public void GetCupsOfIce()
         {
             Console.WriteLine("Enter how many cups of ice...");
-            ingredients[2] = GetUserInput();
+            ingredients[2] = GetInput();
         }
-        private int GetUserInput()
+        private int GetInput()
         {
             int userInput;
             if (!int.TryParse(Console.ReadLine(), out userInput))
             {
-                Console.WriteLine("Invalid Number...\nEnter valid number before");
-                return GetUserInput();
+                Console.WriteLine("*Invalid Number*\nEnter valid number below...");
+                return GetInput();
             }
             else if(userInput == 0)
             {
-                Console.WriteLine("Must have at least 1 of each ingredient...\nEnter valid number before");
-                return GetUserInput();
+                Console.WriteLine("*Must have at least 1 of each ingredient*\nEnter valid number below...");
+                return GetInput();
             }
             return userInput;
         }

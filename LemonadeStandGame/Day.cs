@@ -13,11 +13,13 @@ namespace LemonadeStandGame
         public Weather weather;
         public Store store;
         public UserInterface display;
+        public Random random;
 
         public Day(Player player, Store store)
         {
             this.player = player;
             this.store = store;
+            random = new Random();
             display = new UserInterface();
             weather = new Weather();
             customer = new List<Customer>();
@@ -97,7 +99,7 @@ namespace LemonadeStandGame
                     customers = weather.RandomNumberBetween(5, 10);
                     for (int j = 0; j < customers; j++)
                     {
-                        customer.Add(new Customer(player));
+                        customer.Add(new Customer(player, random));
                     }
                 }
                 else if (i > 3)
@@ -105,13 +107,13 @@ namespace LemonadeStandGame
                     customers = weather.RandomNumberBetween(20, 30);
                     for (int j = 0; j < customers; j++)
                     {
-                        customer.Add(new Customer(player));
+                        customer.Add(new Customer(player, random));
                     }
                 }
             }
             for (int i = 67; i < weather.temperature[1] && weather.weatherType != 0; i++)
             {
-                customer.Add(new Customer(player));
+                customer.Add(new Customer(player, random));
             }
         }
         public bool PromptProceed()

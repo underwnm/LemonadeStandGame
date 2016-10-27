@@ -28,7 +28,6 @@ namespace LemonadeStandGame
         }
         public void AddSugar(int amount)
         {
-            amount = ConvertSugarToTablespoons(amount);
             for (int i = 0; i < amount; i++)
             {
                 sugar.Add(new Sugar());
@@ -36,7 +35,6 @@ namespace LemonadeStandGame
         }
         public void AddIce(int amount)
         {
-            amount = ConvertIceBagToCups(amount);
             for (int i = 0; i < amount; i++)
             {
                 ice.Add(new Ice());
@@ -44,7 +42,6 @@ namespace LemonadeStandGame
         }
         public void AddCup(int amount)
         {
-            amount = ConvertCupBagToCups(amount);
             for (int i = 0; i < amount; i++)
             {
                 cups.Add(new Cup());

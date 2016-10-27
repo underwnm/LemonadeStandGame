@@ -36,7 +36,7 @@ namespace LemonadeStandGame
             store = new Store(player);
             store.SetItemCosts();
         }
-        private string GetUserInput()
+        private string GetInput()
         {
             string userInput = Console.ReadLine();
             return userInput;
