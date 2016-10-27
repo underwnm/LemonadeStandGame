@@ -78,21 +78,6 @@ namespace LemonadeStandGame
                 cups.RemoveAt(0);
             }
         }
-        private int ConvertSugarToTablespoons(int amount)
-        {
-            amount = amount * 240;
-            return amount;
-        }
-        private int ConvertIceBagToCups(int amount)
-        {
-            amount = amount * 10;
-            return amount;
-        }
-        private int ConvertCupBagToCups(int amount)
-        {
-            amount = amount * 100;
-            return amount;
-        }
 
     }
 }

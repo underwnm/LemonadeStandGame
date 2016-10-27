@@ -8,26 +8,24 @@ namespace LemonadeStandGame
 {
     class Day
     {
-        List<Customer> customer;
+        public List<Customer> customer;
         public Player player;
         public Weather weather;
         public Store store;
         public UserInterface display;
 
-        public Day(Player player)
+        public Day(Player player, Store store)
         {
             this.player = player;
+            this.store = store;
             display = new UserInterface();
             weather = new Weather();
-            store = new Store(player);
             customer = new List<Customer>();
         }
         public void ExecuteStartDay()
         {
             weather.GetTomorrowForecast();
-            display.DisplayTomorrowForecast(weather);
-            player.recipe.GetRecipe();
-            ProceedToStore();
+            CreatePlayerRecipe();
             ShopAtStore();
             weather.GetActualWeather();
             display.DisplayActualWeather(weather);
@@ -35,23 +33,40 @@ namespace LemonadeStandGame
             ProceedToStand();
             ExecuteEndDay();
         }
-        private void ProceedToStore()
-        {
-            display.DisplayToStore();
-            display.ProceedWithGame();
-        }
-        private void ShopAtStore()
+        private void CreatePlayerRecipe()
         {
             bool proceed = true;
             while (proceed)
             {
-                display.DisplayItemPrices(store);
-                display.DisplayCurrentInventory(player);
+                display.DisplayRecipeTemplate(weather);
+                player.recipe.GetNumberOfLemons();
+                display.DisplayRecipeTemplate(weather);
+                player.recipe.GetTablespoonsOfSugar();
+                display.DisplayRecipeTemplate(weather);
+                player.recipe.GetCupsOfIce();
+                display.DisplayRecipeTemplate(weather);
                 display.DisplayRecipe(player);
-                player.stand.CheckRecipeVsInventory();
-                proceed = store.ExecuteStore();
-                display.ClearScreen();
+                proceed = PromptProceed();
+            }            
+        }
+        private void ShopAtStore()
+        {
+            display.DisplayStoreTemplate(store, player);
+            bool proceed = store.PromptBuyMore();
+            while (proceed)
+            {
+                display.DisplayStoreTemplate(store, player);
+                store.SellLemons();
+                display.DisplayStoreTemplate(store, player);
+                store.SellSugar();
+                display.DisplayStoreTemplate(store, player);
+                store.SellIce();
+                display.DisplayStoreTemplate(store, player);
+                store.SellCup();
+                display.DisplayStoreTemplate(store, player);
+                proceed = store.PromptBuyMore();
             }
+            display.ClearScreen();
         }
         private void ProceedToStand()
         {
@@ -69,8 +84,8 @@ namespace LemonadeStandGame
         }
         private void ExecuteEndDay()
         {
-            Console.WriteLine("START NEXT DAY");
-            display.ProceedWithGame();
+            Console.WriteLine("HIT ENTER TO START NEXT DAY");
+            Console.ReadLine();
         }
         public void DetermineCustomerDemand()
         {
@@ -94,9 +109,28 @@ namespace LemonadeStandGame
                     }
                 }
             }
-            for (int i = 67; i < weather.temperature[1]; i++)
+            for (int i = 67; i < weather.temperature[1] && weather.weatherType != 0; i++)
             {
                 customer.Add(new Customer(player));
+            }
+        }
+        public bool PromptProceed()
+        {
+            Console.WriteLine("PRESS ESC TO REMAKE RECIPE...PRESS ENTER TO CONTINUE TO STORE");
+            ConsoleKeyInfo key = Console.ReadKey();
+            if (key.Key == ConsoleKey.Escape)
+            {
+                return true;
+            }
+            else if (key.Key == ConsoleKey.Enter)
+            {
+                return false;
+            }
+            else
+            {
+                Console.WriteLine("");
+                Console.WriteLine("Invalid Key..\nPlease make choice");
+                return PromptProceed();
             }
         }
     }

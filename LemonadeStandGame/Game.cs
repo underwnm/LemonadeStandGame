@@ -10,6 +10,7 @@ namespace LemonadeStandGame
     {
         UserInterface display;
         Player player;
+        Store store;
         Day day;
         int currentDay = 1;
         public Game()
@@ -18,28 +19,22 @@ namespace LemonadeStandGame
         }
         public void ExecuteStartOfGame()
         {
-            ExecuteGameWelcome();
+            display.DisplayWelcomeTemplate();
             GetPlayerName();
-
             while (currentDay < 8)
             {
                 display.DisplayDay(currentDay);
-                day = new Day(player);
+                CreateStorePrices();
+                day = new Day(player, store);
                 day.ExecuteStartDay();
                 currentDay++;
             }
+            display.DisplayEndOfGame(player);
         }
-        private void ExecuteGameWelcome()
+        private void CreateStorePrices()
         {
-            display.DisplayMenuMessage();
-            display.AddSpace();
-            display.DisplayMenuInstructions();
-            display.AddSpace();
-            display.DisplayContinueOrExit();
-            GetUserInput();
-            display.ClearScreen();
-            //display.DisplayMenuNumberOfPeople();
-            //GetUserInput();
+            store = new Store(player);
+            store.SetItemCosts();
         }
         private string GetUserInput()
         {

@@ -9,6 +9,33 @@ namespace LemonadeStandGame
 {
     class UserInterface
     {
+        public void DisplayWelcomeTemplate()
+        {
+            DisplayMenuMessage();
+            AddSpace();
+            DisplayMenuInstructions();
+            AddSpace();
+        }
+        public void DisplayStoreTemplate(Store store, Player player)
+        {
+            ClearScreen();
+            DisplayItemPrices(store);
+            DisplayCurrentInventory(player);
+            DisplayRecipe(player);
+            player.stand.CheckRecipeVsInventory();
+        }
+        public void DisplayRecipeTemplate(Weather weather)
+        {
+            ClearScreen();
+            DisplayTomorrowForecast(weather);
+            DisplayGetRecipe();
+        }
+        public void DisplayGetRecipe()
+        {
+            Console.WriteLine("Create a recipe for tomorrow");
+            Console.WriteLine("Each recipe creates a 1 gallon pitcher\nThis will create 10 pints to sell to potential customers");
+            Console.WriteLine("");
+        }
         public void DisplayMenuMessage()
         {
             Console.WriteLine("WELCOME TO LEMONADE STAND! THIS IS A GAME TO SEE WHO CAN GET THE HIGHEST SCORE!\n");
@@ -40,11 +67,6 @@ namespace LemonadeStandGame
         {
             Console.WriteLine("On Day {0}", day);
         }
-        public void DisplayContinueOrExit()
-        {
-            Console.WriteLine("PRESS A KEY TO CONTINUE, ESC TO END. . .");
-
-        }
         public void ClearScreen()
         {
             Console.Clear();
@@ -53,29 +75,15 @@ namespace LemonadeStandGame
         {
             Console.WriteLine("");
         }
-        public void DisplayToStore()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("    LETS GO TO THE STORE FOR YOUR RECIPE INGREDIENTS");
-            Console.WriteLine("----------------------------------------------------------");
-        }
-        public void ProceedWithGame()
-        {
-            Console.WriteLine("");
-            Console.WriteLine("PRESS ANY KEY TO CONTINUE");
-            Console.ReadKey();
-            Console.Clear();
-        }
         public void DisplayItemPrices(Store store)
         {
             Console.WriteLine("");
             Console.WriteLine("These are today's prices");
             Console.WriteLine("------------------------------------");
-            Console.WriteLine("1 lemon costs {0}", store.cost[0]);
-            Console.WriteLine("4 lb bag of sugar costs {0}", store.cost[1]);
-            Console.WriteLine("5 lb bag of ice costs {0}", store.cost[2]);
-            Console.WriteLine("100 pack of pint sized plastic cups cost {0}", store.cost[3]);
+            Console.WriteLine("A single lemon costs {0}", store.cost[0]);
+            Console.WriteLine("A 240 Tbsp bag of sugar costs {0}", store.cost[1]);
+            Console.WriteLine("A 10 cup bag of ice costs {0}", store.cost[2]);
+            Console.WriteLine("A 100 pack of pint sized plastic cups cost {0}", store.cost[3]);
             Console.WriteLine("------------------------------------");
         }
         public void DisplayCurrentInventory(Player player)
@@ -87,7 +95,7 @@ namespace LemonadeStandGame
             Console.WriteLine("You have {0} tablespoons of sugar", player.stand.inventory.sugar.Count());
             Console.WriteLine("You have {0} cups of ice", player.stand.inventory.ice.Count());
             Console.WriteLine("You have {0} pint sized cups", player.stand.inventory.cups.Count());
-            Console.WriteLine("You have ${0} available in cash", player.wallet.money);
+            Console.WriteLine("You have ${0} available in cash", player.wallet.money.ToString("#.##"));
             Console.WriteLine("------------------------------------");
         }
         public void DisplayRecipe(Player player)
@@ -104,15 +112,14 @@ namespace LemonadeStandGame
         {
             Console.WriteLine("");
             Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("     Today is {0} and a High of {1}°", weather.weather[0], weather.weather[1]);
+            Console.WriteLine("    Weather Today: {0} and a High of {1}°", weather.weather[0], weather.weather[1]);
             Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("");
         }
         public void DisplayTomorrowForecast(Weather weather)
         {
             Console.WriteLine("");
             Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine(" Tomororw's forecast calls for {0} and a High of {1}°", weather.weather[0], weather.weather[1]);
+            Console.WriteLine("Tomorrow's weather forecast calls for {0} and a High of {1}°", weather.weather[0], weather.weather[1]);
             Console.WriteLine("----------------------------------------------------------");
             Console.WriteLine("");
         }
@@ -125,13 +132,14 @@ namespace LemonadeStandGame
         }
         public void DisplayPintsSold(Player player)
         {
-            Console.WriteLine("You sold {0} pints of lemonade today", player.stand.pintsSold);
+            Console.WriteLine("Today out of the {0} pints of lemonade you made...\nYou sold {1} to customers...", player.stand.pintsSold, player.stand.pitchers*player.stand.pintsPerPitcher);
         }
         public void DisplayProfit(Player player)
         {
-            Console.WriteLine("Today's Profit: {0}", Math.Round(player.stand.dailyProfit, 2));
-            Console.WriteLine("Total Gross Proft: {0}", Math.Round(player.stand.grossProfit, 2));
-            Console.WriteLine("How much money in your wallet: {0}", Math.Round(player.wallet.money, 2));
+            Console.WriteLine("Today's Income: ${0}", player.stand.dailyIncome.ToString("#.##"));
+            Console.WriteLine("Today's Gross Proft: ${0}", player.stand.grossProfit.ToString("#.##"));
+            Console.WriteLine("Total Net Profit: ${0}", player.totalNetProfit.ToString("#.##"));
+            Console.WriteLine("Your Wallet: ${0}", player.wallet.money.ToString("#.##"));
         }
         public void DisplayHowManyPitchers()
         {
@@ -140,6 +148,11 @@ namespace LemonadeStandGame
         public void DisplayHowMuchPerPint()
         {
             Console.WriteLine("Enter the price per pint of lemonade for the day.");
+        }
+        public void DisplayEndOfGame(Player player)
+        {
+            Console.WriteLine("You have finished your 7 day project of running a lemonade stand.");
+            Console.WriteLine("Total Net Profit: ${0}", player.totalNetProfit.ToString("#.##"));
         }
     }
 }
