@@ -10,9 +10,7 @@ namespace LemonadeStandGame
     {
         UserInterface display;
         Player player;
-        Store store;
-        Day day;
-        int currentDay = 1;
+        public static int round = 1;
         public Game()
         {
             display = new UserInterface();
@@ -21,20 +19,14 @@ namespace LemonadeStandGame
         {
             display.DisplayWelcomeTemplate();
             GetPlayerName();
-            while (currentDay < 8)
+            while (round < 8)
             {
-                display.DisplayDay(currentDay);
-                CreateStorePrices();
-                day = new Day(player, store);
-                day.ExecuteStartDay();
-                currentDay++;
+                display.DisplayDay(round);
+                Day day = new Day(player);
+                day.ExecuteDailyRoutine();
+                round++;
             }
             display.DisplayEndOfGame(player);
-        }
-        private void CreateStorePrices()
-        {
-            store = new Store(player);
-            store.SetItemCosts();
         }
         private string GetInput()
         {

@@ -8,16 +8,16 @@ namespace LemonadeStandGame
 {
     class Wallet
     {
-        public double money;
-        public double startingMoney;
+        public double cashInWallet;
+        public double startingInvestmentMoney;
         public Wallet()
         {
-            startingMoney = 20.00;
-            money = startingMoney;
+            startingInvestmentMoney = 20.00;
+            cashInWallet = startingInvestmentMoney;
         }
-        public bool CheckWallet(double amount)
+        public bool CheckWalletForEnoughMoney(double costOfGoods)
         {
-            return money >= amount;
+            return cashInWallet >= costOfGoods;
         }
     }
 }

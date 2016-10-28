@@ -10,29 +10,27 @@ namespace LemonadeStandGame
     {
         public Inventory inventory;
         public Player player;
-        public double pintPrice;
-        public double grossProfit;
+        public double totalNetProfit;
+        public double pintPriceToday;
+        public double dailyGrossProfit;
         public double dailyIncome;
-        public int pitchers;
         public int pintsPerPitcher;
-        public int pintsSold;
-        public int maxPitchers;
+        public int numberOfPitchersMade;
+        public int maxPitchersPerIngredients;
+        public int pintsSoldToCustomers;
 
         public Stand(Player player)
         {
             this.player = player;
             inventory = new Inventory();
-            grossProfit = 0;
+            dailyGrossProfit = 0;
             pintsPerPitcher = 10;      
         }
         public void CheckRecipeVsInventory()
         {
-            if (inventory.lemons.Count() <= player.recipe.ingredients[0] || inventory.sugar.Count() <= player.recipe.ingredients[1] || inventory.ice.Count() <= player.recipe.ingredients[2])
+            if (inventory.lemons.Count() < player.recipe.ingredients[0] || inventory.sugar.Count() < player.recipe.ingredients[1] || inventory.ice.Count() < player.recipe.ingredients[2])
             {
-                maxPitchers = 0;
-                Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade**", maxPitchers);
-                Console.WriteLine("");
+                maxPitchersPerIngredients = 0;
             }
             else
             {
@@ -40,61 +38,62 @@ namespace LemonadeStandGame
                 int maxSugar = player.stand.inventory.sugar.Count() / player.recipe.ingredients[1];
                 int maxIce = player.stand.inventory.ice.Count() / player.recipe.ingredients[2];
                 int maxCup = player.stand.inventory.cups.Count() / pintsPerPitcher;
-                maxPitchers = new int[] { maxLemons, maxSugar, maxIce, maxCup }.Min();
-                Console.WriteLine("");
-                Console.WriteLine("**With your inventory you can make {0} pitchers of lemonade and sell {1} pints size cups**", maxPitchers, maxPitchers * pintsPerPitcher);
-                Console.WriteLine("");
+                maxPitchersPerIngredients = new int[] { maxLemons, maxSugar, maxIce, maxCup }.Min();
             }
         }
-        public void SetNumberOfPitchers()
+        public int GetNumberOfPitchersMade()
         {
-            pitchers = GetNumberOfPitchers(maxPitchers);
+            string userInput = Console.ReadLine();
+            int userNumber = CheckForValidPitcherInput(userInput);
+            return userNumber;
         }
-        public void SetPintPrice()
+        private int CheckForValidPitcherInput(string userInput)
         {
-            pintPrice = GetPintPrice();
-        }
-        private int GetNumberOfPitchers(int maxPitchers)
-        {
-            int userInput;
-            if (!int.TryParse(Console.ReadLine(), out userInput))
+            int userNumber = Convert.ToInt16(userInput);
+            if (!int.TryParse(userInput, out userNumber))
             {
                 Console.WriteLine("Invalid Number");
-                return GetNumberOfPitchers(maxPitchers);
+                return GetNumberOfPitchersMade();
             }
-            if (userInput > maxPitchers)
+            else if (userNumber > maxPitchersPerIngredients)
             {
                 Console.WriteLine("Insufficient Supply");
-                return GetNumberOfPitchers(maxPitchers);
+                return GetNumberOfPitchersMade();
             }
-            return userInput;
+            return numberOfPitchersMade = userNumber;
         }
-        private double GetPintPrice()
+        public double GetPintPrice()
         {
-            double userInput;
-            if (!double.TryParse(Console.ReadLine(), out userInput))
+            string userInput = Console.ReadLine();
+            double userNumber = CheckForValidPintPrice(userInput);
+            return userNumber;
+        }
+        private double CheckForValidPintPrice(string userInput)
+        {
+            double userNumber = Convert.ToDouble(userInput);
+            if (!double.TryParse(Console.ReadLine(), out userNumber))
             {
                 Console.WriteLine("Invalid Number");
                 return GetPintPrice();
             }
-            return userInput;
+            return pintPriceToday = userNumber;
         }
-        public void FindNumberOfSales(List<Customer> customer)
+        public void CalculateNumberOfCustomerSales(List<Customer> customer, Weather weather)
         {
-            pintsSold = 0;
-            int pintsMade = pitchers * pintsPerPitcher;
+            pintsSoldToCustomers = 0;
+            int pintsMade = numberOfPitchersMade * pintsPerPitcher;
             for (int i = 0; (i < customer.Count()) && (pintsMade > 0); i++)
             {
-                if (customer[i].CheckBuyLemonade())
+                if (customer[i].CheckBuyLemonade(weather))
                 {
-                    pintsSold++;
+                    pintsSoldToCustomers++;
                     pintsMade--;
                 }
             }
         }
         public void UpdateInventory()
         {
-            for (int i = 0; i < pitchers; i++)
+            for (int i = 0; i < numberOfPitchersMade; i++)
             {
                 inventory.RemoveLemon(player.recipe.ingredients[0]);
                 inventory.RemoveSugar(player.recipe.ingredients[1]);
@@ -104,12 +103,18 @@ namespace LemonadeStandGame
         }
         public void AddProfitToWallet(Store store)
         {
-            dailyIncome = pintsSold * pintPrice;
-            grossProfit = dailyIncome - ((pitchers * player.recipe.ingredients[0]) * (store.cost[0]));
-            grossProfit = grossProfit - ((pitchers * player.recipe.ingredients[1]) * (store.cost[1] / store.tablespoonsOfSugarPerBag));
-            grossProfit = grossProfit - ((pitchers * player.recipe.ingredients[2]) * (store.cost[2] / store.cupsOfIcePerBag));
-            grossProfit = grossProfit - ((pitchers * pintsPerPitcher) * (store.cost[3] / store.cupsPerBag));
-            player.wallet.money = player.wallet.money + dailyIncome;
+            dailyIncome = pintsSoldToCustomers * pintPriceToday;
+            dailyGrossProfit = dailyIncome - ((numberOfPitchersMade * player.recipe.ingredients[0]) * (store.costOfGoods[0]));
+            dailyGrossProfit = dailyGrossProfit - ((numberOfPitchersMade * player.recipe.ingredients[1]) * (store.costOfGoods[1] / store.tablespoonsOfSugarPerBag));
+            dailyGrossProfit = dailyGrossProfit - ((numberOfPitchersMade * player.recipe.ingredients[2]) * (store.costOfGoods[2] / store.cupsOfIcePerBag));
+            dailyGrossProfit = dailyGrossProfit - ((numberOfPitchersMade * pintsPerPitcher) * (store.costOfGoods[3] / store.cupsPerBag));
+            player.wallet.cashInWallet = player.wallet.cashInWallet + dailyIncome;
+            totalNetProfit = player.wallet.cashInWallet - player.wallet.startingInvestmentMoney;
+        }
+        public int GetTotalPintsMade()
+        {
+            int totalPintsMade = pintsPerPitcher * numberOfPitchersMade;
+            return totalPintsMade;
         }
     }
 }

@@ -9,9 +9,9 @@ namespace LemonadeStandGame
 {
     class Store
     {
-        public double[] cost;
+        public double[] costOfGoods;
         public int tablespoonsOfSugarPerBag = 240;
-        public int cupsOfIcePerBag = 10;
+        public int cupsOfIcePerBag = 100;
         public int cupsPerBag = 100;
         public Player player;
         private Random random;
@@ -19,22 +19,23 @@ namespace LemonadeStandGame
         {
             this.player = player;
             random = new Random();
-            cost = new double[4];
+            costOfGoods = new double[4];
         }
         public void SetItemCosts()
         {
-            cost[0] = Math.Round(RandomNumberBetween(.5, .6), 2);
-            cost[1] = Math.Round(RandomNumberBetween(1.90, 2.10), 2);
-            cost[2] = Math.Round(RandomNumberBetween(1.30, 1.50), 2);
-            cost[3] = Math.Round(RandomNumberBetween(2, 2.1), 2);
+            costOfGoods[0] = Math.Round(RandomNumberBetween(.50, .75), 2);
+            costOfGoods[1] = Math.Round(RandomNumberBetween(2.00, 2.40), 2);
+            costOfGoods[2] = Math.Round(RandomNumberBetween(2.50, 3.00), 2);
+            costOfGoods[3] = Math.Round(RandomNumberBetween(5.00, 5.50), 2);
         }
         public void SellLemons()
         {
             Console.WriteLine("How many lemons do you want to purchase?");
-            int amount = GetInput();
-            if (player.wallet.CheckWallet(amount))
+            int amount = GetUserInput();
+            double ingredientCost = amount * costOfGoods[0];
+            if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.money = player.wallet.money - amount * cost[0];
+                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
                 player.stand.inventory.AddLemon(amount);
             }
             else
@@ -47,10 +48,11 @@ namespace LemonadeStandGame
         public void SellSugar()
         {
             Console.WriteLine("How many bags of sugar do you want to purchase? (each bag has {0} Tbsp)", tablespoonsOfSugarPerBag);
-            int amount = GetInput();
-            if (player.wallet.CheckWallet(amount))
+            int amount = GetUserInput();
+            double ingredientCost = amount * costOfGoods[1];
+            if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.money = player.wallet.money - amount * cost[1];
+                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
                 player.stand.inventory.AddSugar(amount*tablespoonsOfSugarPerBag);
             }
             else
@@ -63,10 +65,11 @@ namespace LemonadeStandGame
         public void SellIce()
         {
             Console.WriteLine("How many bags of ice do you want to purchase? (each bag has {0} cups)", cupsOfIcePerBag);
-            int amount = GetInput();
-            if (player.wallet.CheckWallet(amount))
+            int amount = GetUserInput();
+            double ingredientCost = amount * costOfGoods[2];
+            if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.money = player.wallet.money - amount * cost[2];
+                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
                 player.stand.inventory.AddIce(amount*cupsOfIcePerBag);
             }
             else
@@ -79,10 +82,11 @@ namespace LemonadeStandGame
         public void SellCup()
         {
             Console.WriteLine("How many bags of pint sized cups do you want to purchase? (each bag has {0} cups)", cupsPerBag);
-            int amount = GetInput();
-            if (player.wallet.CheckWallet(amount))
+            int amount = GetUserInput();
+            double ingredientCost = amount * costOfGoods[3];
+            if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.money = player.wallet.money - amount * cost[3];
+                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
                 player.stand.inventory.AddCup(amount * cupsPerBag);
             }
             else
@@ -91,14 +95,14 @@ namespace LemonadeStandGame
                 SellCup();
             }
         }
-        public bool PromptBuyMore()
+        public bool BuyAgainOrExit()
         {
             Console.WriteLine("PRESS ESC TO EXIT STORE...PRESS ENTER TO BUY");
             ConsoleKeyInfo key = Console.ReadKey();
             if (key.Key == ConsoleKey.Escape)
             {
                 return false;
-            }                
+            }
             else if (key.Key == ConsoleKey.Enter)
             {
                 return true;
@@ -106,19 +110,25 @@ namespace LemonadeStandGame
             else
             {
                 Console.WriteLine("");
-                Console.WriteLine("Invalid Key..\nPlease make choice");
-                return PromptBuyMore();
+                Console.WriteLine("Invalid Key...\nPlease make choice");
+                return BuyAgainOrExit();
             }
         }
-        private int GetInput()
+        private int GetUserInput()
         {
-            int userInput;
-            if (!int.TryParse(Console.ReadLine(), out userInput))
+            string userInput = Console.ReadLine();
+            int userNumber = CheckForValidInput(userInput);
+            return userNumber;
+        }
+        private int CheckForValidInput(string userInput)
+        {
+            int userNumber = Convert.ToInt16(userInput);
+            if (!int.TryParse(userInput, out userNumber))
             {
-                Console.WriteLine("Invalid Number");
-                return GetInput();
+                Console.WriteLine("*Invalid Number*\nEnter valid number below...");
+                return GetUserInput();
             }
-            return userInput;
+            return userNumber;
         }
         private double RandomNumberBetween(double minValue, double maxvalue)
         {

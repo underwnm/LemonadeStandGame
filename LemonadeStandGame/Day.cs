@@ -14,28 +14,29 @@ namespace LemonadeStandGame
         public Store store;
         public UserInterface display;
         public Random random;
+ 
 
-        public Day(Player player, Store store)
+        public Day(Player player)
         {
             this.player = player;
-            this.store = store;
+            store = new Store(player);
             random = new Random();
             display = new UserInterface();
             weather = new Weather();
             customer = new List<Customer>();
         }
-        public void ExecuteStartDay()
+        public void ExecuteDailyRoutine()
         {
             weather.GetTomorrowForecast();
-            CreatePlayerRecipe();
-            ShopAtStore();
+            CreateDailyRecipe();
+            ExecuteDailyStoreRoutine();
             weather.GetActualWeather();
             display.DisplayActualWeather(weather);
-            DetermineCustomerDemand();
-            ProceedToStand();
-            ExecuteEndDay();
+            GetDailyCustomerAmount();
+            ExecuteDailyStandRoutine();
+            GetProceedToNextDay();
         }
-        private void CreatePlayerRecipe()
+        private void CreateDailyRecipe()
         {
             bool proceed = true;
             while (proceed)
@@ -48,13 +49,13 @@ namespace LemonadeStandGame
                 player.recipe.GetCupsOfIce();
                 display.DisplayRecipeTemplate(weather);
                 display.DisplayRecipe(player);
-                proceed = PromptProceed();
+                proceed = AskOptionToRemakeRecipe();
             }            
         }
-        private void ShopAtStore()
+        private void ExecuteDailyStoreRoutine()
         {
             display.DisplayStoreTemplate(store, player);
-            bool proceed = store.PromptBuyMore();
+            bool proceed = store.BuyAgainOrExit();
             while (proceed)
             {
                 display.DisplayStoreTemplate(store, player);
@@ -66,30 +67,26 @@ namespace LemonadeStandGame
                 display.DisplayStoreTemplate(store, player);
                 store.SellCup();
                 display.DisplayStoreTemplate(store, player);
-                proceed = store.PromptBuyMore();
+                proceed = store.BuyAgainOrExit();
             }
             display.ClearScreen();
         }
-        private void ProceedToStand()
+        private void ExecuteDailyStandRoutine()
         {
             display.DisplayAtStand();
             player.stand.CheckRecipeVsInventory();
+            display.DisplayMaxPitchersPerIngredients(player);
             display.DisplayHowManyPitchers();
-            player.stand.SetNumberOfPitchers();
+            player.stand.GetNumberOfPitchersMade();
             display.DisplayHowMuchPerPint();
-            player.stand.SetPintPrice();
-            player.stand.FindNumberOfSales(customer);
+            player.stand.GetPintPrice();
+            player.stand.CalculateNumberOfCustomerSales(customer, weather);
             display.DisplayPintsSold(player);
             player.stand.AddProfitToWallet(store);
             display.DisplayProfit(player);
             player.stand.UpdateInventory();
         }
-        private void ExecuteEndDay()
-        {
-            Console.WriteLine("HIT ENTER TO START NEXT DAY");
-            Console.ReadLine();
-        }
-        public void DetermineCustomerDemand()
+        private void GetDailyCustomerAmount()
         {
             for (int i = 0; i <= weather.weatherType; i++)
             {
@@ -104,19 +101,19 @@ namespace LemonadeStandGame
                 }
                 else if (i > 3)
                 {
-                    customers = weather.RandomNumberBetween(20, 30);
+                    customers = weather.RandomNumberBetween(30, 35);
                     for (int j = 0; j < customers; j++)
                     {
                         customer.Add(new Customer(player, random));
                     }
                 }
             }
-            for (int i = 67; i < weather.temperature[1] && weather.weatherType != 0; i++)
+            for (int i = 67; i < weather.temperature[1]; i++)
             {
                 customer.Add(new Customer(player, random));
             }
         }
-        public bool PromptProceed()
+        private bool AskOptionToRemakeRecipe()
         {
             Console.WriteLine("PRESS ESC TO REMAKE RECIPE...PRESS ENTER TO CONTINUE TO STORE");
             ConsoleKeyInfo key = Console.ReadKey();
@@ -132,8 +129,13 @@ namespace LemonadeStandGame
             {
                 Console.WriteLine("");
                 Console.WriteLine("Invalid Key..\nPlease make choice");
-                return PromptProceed();
+                return AskOptionToRemakeRecipe();
             }
+        }
+        public void GetProceedToNextDay()
+        {
+            Console.WriteLine("HIT ENTER TO START NEXT DAY");
+            Console.ReadLine();
         }
     }
 }

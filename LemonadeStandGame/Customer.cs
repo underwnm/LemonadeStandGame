@@ -15,10 +15,10 @@ namespace LemonadeStandGame
             this.random = random;
             this.player = player;
         }
-        public bool CheckBuyLemonade()
+        public bool CheckBuyLemonade(Weather weather)
         {
-            if (CheckTastePreference() && CheckPrice())
-            {                               
+            if (CheckPrice(weather) && CheckTastePreference())
+            {
                 return true;
             }
             else
@@ -26,12 +26,31 @@ namespace LemonadeStandGame
                 return false;
             }
         }
-        private bool CheckPrice()
+        private bool CheckPrice(Weather weather)
         {
-            double HighPrice = RandomNumberBetween(0, 4);
-            if (player.stand.pintPrice < HighPrice)
+            if (weather.weatherType <= 2)
             {
-                return true;
+                double HighPrice = RandomNumberBetween(0, 2);
+                if (player.stand.pintPriceToday < HighPrice)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else if (weather.weatherType > 2)
+            {
+                double HighPrice = RandomNumberBetween(1, 2);
+                if (player.stand.pintPriceToday < HighPrice)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             else
             {
@@ -41,7 +60,7 @@ namespace LemonadeStandGame
         private bool CheckTastePreference()
         {
             double chanceToBuy;
-            double tastePreference = RandomNumberBetween(2, 8);
+            double tastePreference = RandomNumberBetween(1, 8);
             if (player.recipe.ingredients[0] >= tastePreference)
             {
                 chanceToBuy = .4;
@@ -50,7 +69,7 @@ namespace LemonadeStandGame
             {
                 chanceToBuy = .25;
             }
-            tastePreference = RandomNumberBetween(25, 45);
+            tastePreference = RandomNumberBetween(1, 45);
             if (player.recipe.ingredients[1] >= tastePreference)
             {
                 chanceToBuy = .4 + chanceToBuy;
@@ -59,7 +78,7 @@ namespace LemonadeStandGame
             {
                 chanceToBuy = .25 + chanceToBuy;
             }
-            tastePreference = RandomNumberBetween(1, 4);
+            tastePreference = RandomNumberBetween(1, 5);
             if (player.recipe.ingredients[2] >= tastePreference)
             {
                 chanceToBuy = .4 + chanceToBuy;
