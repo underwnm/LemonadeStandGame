@@ -35,7 +35,7 @@ namespace LemonadeStandGame
             double ingredientCost = amount * costOfGoods[0];
             if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
+                player.wallet.money = Math.Round(player.wallet.money - ingredientCost, 2);
                 player.stand.inventory.AddLemon(amount);
             }
             else
@@ -52,7 +52,7 @@ namespace LemonadeStandGame
             double ingredientCost = amount * costOfGoods[1];
             if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
+                player.wallet.money = player.wallet.money - ingredientCost;
                 player.stand.inventory.AddSugar(amount*tablespoonsOfSugarPerBag);
             }
             else
@@ -69,7 +69,7 @@ namespace LemonadeStandGame
             double ingredientCost = amount * costOfGoods[2];
             if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
+                player.wallet.money = Math.Round(player.wallet.money - ingredientCost, 2);
                 player.stand.inventory.AddIce(amount*cupsOfIcePerBag);
             }
             else
@@ -86,7 +86,7 @@ namespace LemonadeStandGame
             double ingredientCost = amount * costOfGoods[3];
             if (player.wallet.CheckWalletForEnoughMoney(ingredientCost))
             {
-                player.wallet.cashInWallet = Math.Round(player.wallet.cashInWallet - ingredientCost, 2);
+                player.wallet.money = Math.Round(player.wallet.money - ingredientCost, 2);
                 player.stand.inventory.AddCup(amount * cupsPerBag);
             }
             else
@@ -122,7 +122,7 @@ namespace LemonadeStandGame
         }
         private int CheckForValidInput(string userInput)
         {
-            int userNumber = Convert.ToInt16(userInput);
+            int userNumber;
             if (!int.TryParse(userInput, out userNumber))
             {
                 Console.WriteLine("*Invalid Number*\nEnter valid number below...");

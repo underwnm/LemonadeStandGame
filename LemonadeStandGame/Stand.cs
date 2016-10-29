@@ -23,7 +23,6 @@ namespace LemonadeStandGame
         {
             this.player = player;
             inventory = new Inventory();
-            dailyGrossProfit = 0;
             pintsPerPitcher = 10;      
         }
         public void CheckRecipeVsInventory()
@@ -41,42 +40,40 @@ namespace LemonadeStandGame
                 maxPitchersPerIngredients = new int[] { maxLemons, maxSugar, maxIce, maxCup }.Min();
             }
         }
-        public int GetNumberOfPitchersMade()
+        public void GetNumberOfPitchersMade()
         {
             string userInput = Console.ReadLine();
-            int userNumber = CheckForValidPitcherInput(userInput);
-            return userNumber;
+            numberOfPitchersMade = CheckForValidPitcherInput(userInput);
         }
         private int CheckForValidPitcherInput(string userInput)
         {
-            int userNumber = Convert.ToInt16(userInput);
-            if (!int.TryParse(userInput, out userNumber))
+            int userAmount;
+            if (!int.TryParse(userInput, out userAmount))
             {
                 Console.WriteLine("Invalid Number");
-                return GetNumberOfPitchersMade();
+                GetNumberOfPitchersMade();
             }
-            else if (userNumber > maxPitchersPerIngredients)
+            else if (userAmount > maxPitchersPerIngredients)
             {
                 Console.WriteLine("Insufficient Supply");
-                return GetNumberOfPitchersMade();
+                GetNumberOfPitchersMade();
             }
-            return numberOfPitchersMade = userNumber;
+            return userAmount;
         }
-        public double GetPintPrice()
+        public void GetPintPrice()
         {
             string userInput = Console.ReadLine();
-            double userNumber = CheckForValidPintPrice(userInput);
-            return userNumber;
+            pintPriceToday = CheckForValidPintPrice(userInput);
         }
         private double CheckForValidPintPrice(string userInput)
         {
-            double userNumber = Convert.ToDouble(userInput);
-            if (!double.TryParse(Console.ReadLine(), out userNumber))
+            double userPrice;
+            if (!double.TryParse(userInput, out userPrice))
             {
                 Console.WriteLine("Invalid Number");
-                return GetPintPrice();
+                GetPintPrice();
             }
-            return pintPriceToday = userNumber;
+            return userPrice;
         }
         public void CalculateNumberOfCustomerSales(List<Customer> customer, Weather weather)
         {
@@ -108,8 +105,8 @@ namespace LemonadeStandGame
             dailyGrossProfit = dailyGrossProfit - ((numberOfPitchersMade * player.recipe.ingredients[1]) * (store.costOfGoods[1] / store.tablespoonsOfSugarPerBag));
             dailyGrossProfit = dailyGrossProfit - ((numberOfPitchersMade * player.recipe.ingredients[2]) * (store.costOfGoods[2] / store.cupsOfIcePerBag));
             dailyGrossProfit = dailyGrossProfit - ((numberOfPitchersMade * pintsPerPitcher) * (store.costOfGoods[3] / store.cupsPerBag));
-            player.wallet.cashInWallet = player.wallet.cashInWallet + dailyIncome;
-            totalNetProfit = player.wallet.cashInWallet - player.wallet.startingInvestmentMoney;
+            player.wallet.money = player.wallet.money + dailyIncome;
+            totalNetProfit = player.wallet.money - player.wallet.startingInvestmentMoney;
         }
         public int GetTotalPintsMade()
         {

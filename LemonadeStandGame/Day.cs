@@ -54,6 +54,7 @@ namespace LemonadeStandGame
         }
         private void ExecuteDailyStoreRoutine()
         {
+            store.SetItemCosts();
             display.DisplayStoreTemplate(store, player);
             bool proceed = store.BuyAgainOrExit();
             while (proceed)

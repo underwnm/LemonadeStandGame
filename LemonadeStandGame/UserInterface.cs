@@ -103,7 +103,7 @@ namespace LemonadeStandGame
             Console.WriteLine("You have {0} tablespoons of sugar", player.stand.inventory.sugar.Count());
             Console.WriteLine("You have {0} cups of ice", player.stand.inventory.ice.Count());
             Console.WriteLine("You have {0} pint sized cups", player.stand.inventory.cups.Count());
-            Console.WriteLine("You have ${0} available in cash", player.wallet.cashInWallet.ToString("#.##"));
+            Console.WriteLine("You have ${0} available in cash", player.wallet.money.ToString("#.##"));
             Console.WriteLine("------------------------------------");
         }
         public void DisplayRecipe(Player player)

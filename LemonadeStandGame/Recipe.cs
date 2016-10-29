@@ -37,7 +37,7 @@ namespace LemonadeStandGame
         }
         private int CheckForValidInput(string userInput)
         {
-            int userNumber = Convert.ToInt16(userInput);
+            int userNumber;
             if (!int.TryParse(userInput, out userNumber))
             {
                 Console.WriteLine("*Invalid Number*\nEnter valid number below...");
