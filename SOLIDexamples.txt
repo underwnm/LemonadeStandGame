@@ -1,0 +1,5 @@
+SOLID DESIGN PRINCIPLES
+
+I used open/closed on the abstract class Item. It will make it open to extension but closed to modification. We could extend to add more items or new item features but closed to changing existing code.
+
+I used single responsibility throughout my program. One example is in my store class I used separate functions to sell my items. Instead of using one long switch case for selling lemons, sugar, ice, cups. I used separate functions so I could use a template in my UI. That allows me to keep the template and call each new function.
