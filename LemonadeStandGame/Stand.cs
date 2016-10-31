@@ -78,7 +78,7 @@ namespace LemonadeStandGame
         public void CalculateNumberOfCustomerSales(List<Customer> customer, Weather weather)
         {
             pintsSoldToCustomers = 0;
-            int pintsMade = numberOfPitchersMade * pintsPerPitcher;
+            int pintsMade = GetTotalPintsMade();
             for (int i = 0; (i < customer.Count()) && (pintsMade > 0); i++)
             {
                 if (customer[i].CheckBuyLemonade(weather))
