@@ -11,6 +11,7 @@ namespace LemonadeStandGame
         UserInterface display;
         Player player;
         public static int round = 1;
+        public static int numberOfRounds = 8;
         public Game()
         {
             display = new UserInterface();
@@ -19,7 +20,7 @@ namespace LemonadeStandGame
         {
             display.DisplayWelcomeTemplate();
             GetPlayerName();
-            while (round < 8)
+            while (round < numberOfRounds)
             {
                 display.DisplayDay(round);
                 Day day = new Day(player);
