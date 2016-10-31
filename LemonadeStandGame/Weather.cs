@@ -90,12 +90,12 @@ namespace LemonadeStandGame
                     break;
             }
         }
-        public int GetRandomNumber()
+        private int GetRandomNumber()
         {
             int number = random.Next(0, 5);
             return number;
         }
-        public int RandomNumberBetween(int minValue, int maxvalue)
+        private int RandomNumberBetween(int minValue, int maxvalue)
         {
             double multiplier = random.NextDouble();
             int number = Convert.ToInt16(minValue + (multiplier * (maxvalue - minValue)));

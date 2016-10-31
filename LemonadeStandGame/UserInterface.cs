@@ -51,11 +51,6 @@ namespace LemonadeStandGame
             Thread.Sleep(500);
             Console.WriteLine("--------------------------------------------------------------------------------");
         }
-        public void DisplayMenuNumberOfPeople()
-        {
-            Console.WriteLine("HOW MANY PEOPLE WILL BE PLAYING?");
-            Console.WriteLine("TYPE YOUR ANSWER AND HIT ENTER");
-        }
         public void DisplayMenuInstructions()
         {
             Console.WriteLine("TO MANAGE YOUR LEMONADE STAND, YOU WILL NEED TO MAKE THESE DECISIONS EVERY DAY.\n");
@@ -158,7 +153,7 @@ namespace LemonadeStandGame
         }
         public void DisplayEndOfGame(Player player)
         {
-            Console.WriteLine("You have finished your 7 day attempt at running a lemonade stand.");
+            Console.WriteLine("{0} you have finished your 7 day attempt at running a lemonade stand.", player.name);
             Console.WriteLine("Total Net Profit: ${0}", player.stand.totalNetProfit);
         }
         public void DisplayMaxPitchersPerIngredients(Player player)

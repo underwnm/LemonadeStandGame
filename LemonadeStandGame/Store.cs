@@ -130,10 +130,10 @@ namespace LemonadeStandGame
             }
             return userNumber;
         }
-        private double RandomNumberBetween(double minValue, double maxvalue)
+        private double RandomNumberBetween(double minValue, double maxValue)
         {
             double next = random.NextDouble();
-            return minValue + (next * (maxvalue - minValue));
+            return minValue + (next * (maxValue - minValue));
         }
     }
 }

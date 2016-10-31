@@ -97,10 +97,10 @@ namespace LemonadeStandGame
             }
             
         }
-        private double RandomNumberBetween(int minValue, int maxvalue)
+        private double RandomNumberBetween(int minValue, int maxValue)
         {
             double multiplier = random.NextDouble();
-            double number = minValue + (multiplier * (maxvalue - minValue));
+            double number = minValue + (multiplier * (maxValue - minValue));
             return number;
         }
     }
